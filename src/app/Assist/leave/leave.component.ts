@@ -62,11 +62,13 @@ export class LeaveComponent implements OnInit {
       { columnDef: 'status', header: 'Status' },
     ]
     this.aService.initializeColumnProperties(this.displayedColumns,this.columnShowHideList);
+    this.getLeave();
+
   }
 
   public getLeave() {
-    const sb = this.aService.getMethod('http://localhost:8001/leaves', '',).subscribe((res) => {
-      this.dataSource.data = res.content;
+    const sb = this.aService.getMethod('/leaves', '',).subscribe((res) => {
+      this.dataSource.data = res;
       this.totalRows = res.totalElements
     });
     this.subscriptions.push(sb);
@@ -106,5 +108,21 @@ export class LeaveComponent implements OnInit {
   }
 
   openDeleteCustomer(element: any, view: string){
+  }
+
+  newSuperAdmin() {
+
+  }
+
+  toggleColumn(column:any) {
+
+  }
+
+  openSuperAdminDialog(element:any, edit: string) {
+
+  }
+
+  openSuperAdminDelete(deleteContent:any, element:any) {
+
   }
 }

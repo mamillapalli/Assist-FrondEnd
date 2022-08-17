@@ -24,7 +24,7 @@ export const environment = {
     },
 
     'demo2': {
-      'title': 'Demo 2',
+      'title': 'Demo 21',
       'description': 'SaaS Application',
       'published': true,
       'thumbnail': './assets/media/demos/demo2.png'

@@ -1,7 +1,310 @@
-/* You can add global styles to this file, and also import other style files */
 @import "./assets/sass/style.scss";
-// @import "./assets/sass/style";
-// Replace above style with this css file to enable RTL styles
-// @import "./assets/css/style.rtl";
 @import './assets/sass/plugins.scss';
 @import "./assets/sass/style.angular.scss";
+@import "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";
+
+.floating-form {
+  width:320px;
+}
+
+
+.floating-label {
+  position:relative;
+  margin-bottom:20px;
+}
+
+.floating-label_readonly {
+  position:relative;
+  margin-bottom:20px;
+}
+
+.floating-label_mandatory {
+  position:relative;
+  margin-bottom:20px;
+}
+
+.floating-input , .floating-select {
+  font-size:12px;
+  padding:4px 4px;
+  display:block;
+  width:80%;
+  height:30px;
+  background-color: transparent;
+  border:none;
+  border-bottom:1px solid #757575;
+}
+
+.floating-input_mandatory , .floating-select_mandatory {
+  font-size:12px;
+  padding:4px 4px;
+  display:block;
+  width:80%;
+  height:30px;
+  background-color: transparent;
+  border:none;
+  border-bottom:1px solid rgba(255, 153, 51, 0.28);
+}
+
+.floating-input_readonly , .floating-select_readonly {
+  font-size:12px;
+  padding:4px 4px;
+  display:block;
+  width:80%;
+  height:30px;
+  background-color: transparent;
+  border:none;
+  border-bottom:1px solid rgb(82, 100, 174);
+}
+
+.floating-input:focus , .floating-select:focus {
+  outline:none;
+  border-bottom:2px solid #000000;
+}
+
+.floating-input_readonly:focus , .floating-select_readonly:focus {
+  outline:none;
+  border-bottom:2px solid rgb(82, 100, 174);
+}
+
+.floating-input_mandatory:focus , .floating-select_mandatory:focus {
+  outline:none;
+  border-bottom:2px solid rgb(248, 210, 138);
+}
+
+.label_OA {
+  color:#999;
+  font-family: Arial,Helvetica,sans-serif;
+  font-size:12px;
+  font-weight:lighter;
+  position:absolute;
+  pointer-events:none;
+  left:5px;
+  top:5px;
+  transition:0.2s ease all;
+  -moz-transition:0.2s ease all;
+  -webkit-transition:0.2s ease all;
+}
+
+.label_OA_readonly {
+  color: rgba(19, 136, 8, 0.17);
+  font-family: Arial,Helvetica,sans-serif;
+  font-size:12px;
+  font-weight:lighter;
+  position:absolute;
+  pointer-events:none;
+  left:5px;
+  top:5px;
+  transition:0.2s ease all;
+  -moz-transition:0.2s ease all;
+  -webkit-transition:0.2s ease all;
+}
+
+.label_OA_mandatory {
+  color: rgba(19, 136, 8, 0.17);
+  font-family: Arial,Helvetica,sans-serif;
+  font-size:12px;
+  font-weight:lighter;
+  position:absolute;
+  pointer-events:none;
+  left:5px;
+  top:5px;
+  transition:0.2s ease all;
+  -moz-transition:0.2s ease all;
+  -webkit-transition:0.2s ease all;
+}
+
+.floating-input:focus ~ label, .floating-input:not(:placeholder-shown) ~ label {
+  top:-18px;
+  font-size:12px;
+  color: #9a8f8f;
+}
+
+.floating-input_readonly:focus ~ label, .floating-input_readonly:not(:placeholder-shown) ~ label {
+  top:-18px;
+  font-size:12px;
+  color: rgb(154, 143, 143);
+}
+
+.floating-input_mandatory:focus ~ label, .floating-input_mandatory:not(:placeholder-shown) ~ label {
+  top:-18px;
+  font-size:12px;
+  color: rgb(154, 143, 143);
+}
+
+.floating-select:focus ~ label , .floating-select:not([value=""]):valid ~ label {
+  top:-18px;
+  font-size:12px;
+  color: #9a8f8f;
+}
+
+.floating-select_readonly:focus ~ label , .floating-select_readonly:not([value=""]):valid ~ label {
+  top:-18px;
+  font-size:12px;
+  color: rgb(154, 143, 143);
+}
+
+.floating-select_mandatory:focus ~ label , .floating-select_mandatory:not([value=""]):valid ~ label {
+  top:-18px;
+  font-size:12px;
+  color: rgb(154, 143, 143);
+}
+
+/* active state */
+.floating-input:focus ~ .bar:before, .floating-input:focus ~ .bar:after, .floating-select:focus ~ .bar:before, .floating-select:focus ~ .bar:after {
+  width:50%;
+}
+
+*, *:before, *:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.floating-textarea {
+  min-height: 30px;
+  max-height: 260px;
+  overflow:hidden;
+  overflow-x: hidden;
+}
+
+.floating-textarea_readonly {
+  min-height: 30px;
+  max-height: 260px;
+  overflow:hidden;
+  overflow-x: hidden;
+}
+
+/* highlighter */
+.highlight {
+  position:absolute;
+  height:50%;
+  width:80%;
+  top:15%;
+  left:0;
+  pointer-events:none;
+  opacity:0.5;
+}
+
+/* active state */
+.floating-input:focus ~ .highlight , .floating-select:focus ~ .highlight {
+  -webkit-animation:inputHighlighter 0.3s ease;
+  -moz-animation:inputHighlighter 0.3s ease;
+  animation:inputHighlighter 0.3s ease;
+}
+
+/* animation */
+@-webkit-keyframes inputHighlighter {
+  from { background:#5264AE; }
+  to 	{ width:0; background:transparent; }
+}
+@-moz-keyframes inputHighlighter {
+  from { background:#5264AE; }
+  to 	{ width:0; background:transparent; }
+}
+@keyframes inputHighlighter {
+  from { background:#5264AE; }
+  to 	{ width:0; background:transparent; }
+}
+
+.input-group-text_OA {
+  height:30px;
+  display: flex;
+  align-items: center;
+  padding: $input-group-addon-padding-y $input-group-addon-padding-x;
+  @include font-size($input-font-size); // Match inputs
+  font-weight: $input-group-addon-font-weight;
+  line-height: $input-line-height;
+  color: $input-group-addon-color;
+  text-align: center;
+  white-space: nowrap;
+  //background-color: $input-group-addon-bg;
+  //border: $input-border-width solid $input-group-addon-border-color;
+  //@include border-radius($input-border-radius);
+}
+
+/****  floating-Lable style end ****/
+
+.customSelect {
+  background-clip: padding-box;
+  display: block;
+  font-size:13px;
+  height:30px;
+  line-height: 1.5;
+  padding: 0.25rem 0.75rem;
+  width:80%;
+  transition-duration: 0.15s, 0.15s;
+  transition-timing-function: ease-in-out, ease-in-out;
+  transition-delay: 0s, 0s;
+}
+
+.mat-table {
+  width: 100%;
+  max-width: 100%;
+  overflow: auto;
+  border-color: grey;
+  background-color: transparent;
+  border-collapse: collapse;
+  border-spacing: 0;
+  text-indent: initial;
+  display: table;
+}
+.mat-header-cell{
+  font-size: 13px!important;
+  color: #337ab7;
+  text-decoration: none;
+  font-weight: 600;
+  text-align: left;
+  font-family: Montserrat;
+  vertical-align: middle;
+  padding: 8px;
+  line-height: 1.42857143;
+  width: fit-content !important;
+}
+
+td.mat-cell{
+  white-space: nowrap;
+  word-break: break-word;
+  font-size: 12px!important;
+  font-family: Montserrat;
+  text-align: left;
+  padding: 8px;
+  line-height: 1.42857143;
+  font-weight: 500;
+  color: black;
+  width: fit-content !important;
+}
+
+.mat-row:hover {
+  background-color: #f5f5f5;
+}
+
+.toolbar{
+  background-color: var(--bg-card-color);
+  color: var(--text-main-color);
+  overflow: auto;
+  padding: 10px;
+  color:gray;
+}
+
+.toolBar .toolBarTitle {
+  float: left;
+  margin: 5px 0 0 10px;
+  color: #983a3a;
+  font-family: Montserrat;
+  font-size: 14px;
+}
+
+
+.my-class{
+  --height: 250px;
+  --max-height: 250px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: red;
+  align-items: flex-end;
+  --backdrop-opacity: 0.3;
+  --border-radius: 10px 10px 0px 0px;
+  width: 80%;
+  height: 80%;
+}
+

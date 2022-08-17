@@ -62,6 +62,7 @@ import {NgxMatSelectSearchModule} from "ngx-mat-select-search";
 import {AngularMultiSelectModule} from "angular2-multiselect-dropdown";
 import {LazyLoadImageModule} from "ng-lazyload-image";
 import { LeaveComponent } from './Assist/leave/leave.component';
+import { TestComponent } from './Assist/test/test.component';
 
 
 function appInitializer(authService: AuthService) {
@@ -74,7 +75,7 @@ function appInitializer(authService: AuthService) {
 }
 
 @NgModule({
-  declarations: [AppComponent, EmployeeComponent, LeaveComponent],
+  declarations: [AppComponent, EmployeeComponent, LeaveComponent, TestComponent],
   imports: [
     BrowserModule,
     CommonModule,
