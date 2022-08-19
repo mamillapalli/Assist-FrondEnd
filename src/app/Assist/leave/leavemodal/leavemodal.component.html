@@ -1,0 +1,104 @@
+<div class="card">
+  <div class="card-body">
+    <div
+      class="stepper stepper-links d-flex flex-column"
+      id="kt_create_account_stepper"
+    >
+      <div class="stepper-nav mb-5">
+        <div [ngClass]="{
+             current: currentStep$.value === 1}"
+             class="stepper-item"
+        >
+          <h3 class="stepper-title">Leave Request Info</h3>
+        </div>
+      </div>
+    </div>
+
+    <form
+        class="mx-auto mw-100 w-100"
+        id="kt_create_account_form"
+        noValidate
+      >
+        <div class="current">
+          <ng-container *ngIf="currentStep$.value === 1">
+            <app-leavestep1 [defaultValues]="account$.value"
+                            [formValue]="formValue"
+                            [mode]=mode
+                            [updateParentModel]="updateAccount"
+                            class="w-100"
+            ></app-leavestep1>
+          </ng-container>
+        </div>
+
+        <div class="d-flex flex-stack pt-15" style="justify-content: center">
+          <div class="mr-2">
+            <ng-container *ngIf="currentStep$.value !== 1">
+              <button
+                (click)="prevStep()"
+                class="btn btn-sm btn-color-red btn-light-primary me-2"
+                type="button"
+              >
+                <span
+                  [inlineSVG]="'./assets/media/icons/duotune/arrows/arr063.svg'"
+                  class="svg-icon svg-icon-4 me-1"
+                ></span>
+                Back
+              </button>
+            </ng-container>
+          </div>
+
+          <div class="mr-2">
+            <ng-container>
+              <button
+                (click)="closeModal()"
+                class="btn btn-sm btn-light-warning btn-light-primary me-2"
+                type="button"
+              >
+                Cancel
+              </button>
+            </ng-container>
+          </div>
+
+          <ng-container *ngIf="currentStep$.value !== formsCount">
+            <div>
+              <button
+                (click)="nextStep()"
+                [disabled]="!isCurrentFormValid$.value"
+                class="btn btn-sm btn-light-success btn-primary me-2"
+                type="button"
+              >
+                <span class="indicator-label">
+              <ng-container *ngIf="currentStep$.value < formsCount - 1">
+                Continue {{ " " }}
+                <span
+                  [inlineSVG]="
+                      './assets/media/icons/duotune/arrows/arr064.svg'
+                    "
+                  class="svg-icon svg-icon-3 ms-2 me-0"
+                ></span>
+              </ng-container>
+                </span>
+              </button>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="this.mode !== 'view'">
+            <div>
+              <button
+                (click)="nextStep()"
+                [disabled]="!isCurrentFormValid$.value"
+                class="btn btn-sm btn-light-success btn-primary me-2"
+                type="button"
+              >
+                <span class="indicator-label">
+                  <ng-container *ngIf="this.mode !== 'view'">
+                    Submit
+                  </ng-container>
+                </span>
+              </button>
+            </div>
+          </ng-container>
+        </div>
+      </form>
+    </div>
+  </div>

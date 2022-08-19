@@ -1,7 +1,7 @@
-import {Component, OnInit, Output, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, Output, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {leaverequest} from "../../AssistModel/leaverequest";
-import {NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
+import {ModalDismissReasons, NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
 import {Subscription} from "rxjs";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort, Sort} from "@angular/material/sort";
@@ -12,13 +12,14 @@ import {AuthService} from "../../modules/auth";
 import {NotificationService} from "../../AssistService/notification.service";
 import {CdkDragDrop} from "@angular/cdk/drag-drop";
 import {assistService} from "../../AssistService/assist.service";
+import {LeavemodalComponent} from "./leavemodal/leavemodal.component";
 
 @Component({
   selector: 'app-leave',
   templateUrl: './leave.component.html',
   styleUrls: ['./leave.component.scss']
 })
-export class LeaveComponent implements OnInit {
+export class LeaveComponent implements OnInit,AfterViewInit {
   dataSource: any = new MatTableDataSource<leaverequest>();
   @Output() displayedColumns:  string[] = ['columnSetting','name', 'startDate', 'endDate', 'status', 'approverComments','actions'];
   @Output() fDisplayedColumns: string[] = ['customerId', 'name', 'startDate', 'endDate', 'status','approverComments'];
@@ -46,6 +47,7 @@ export class LeaveComponent implements OnInit {
   private _filterMethods = filterFunction;
   searchFilter: any = {};
   columns: { columnDef: string; header: string; }[];
+  closeResult: any ;
 
   constructor(public authService: AuthService,public modalService: NgbModal,
               public notifyService: NotificationService,public aService: assistService) {
@@ -66,18 +68,39 @@ export class LeaveComponent implements OnInit {
 
   }
 
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
   public getLeave() {
     const sb = this.aService.getMethod('/leaves', '',).subscribe((res) => {
       this.dataSource.data = res;
-      this.totalRows = res.totalElements
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     });
     this.subscriptions.push(sb);
   }
 
   createLeaveRequest() {
+    this.modalOption.backdrop = 'static';
+    this.modalOption.keyboard = false;
+    this.modalOption.size = 'xl'
+    const modalRef = this.modalService.open(LeavemodalComponent, this.modalOption);
+    modalRef.componentInstance.mode = 'new';
+    modalRef.componentInstance.displayedColumns = this.displayedColumns;
+    modalRef.componentInstance.fDsplayedColumns = this.fDisplayedColumns;
+    modalRef.result.then((result) => {
+      console.log('newSuperAdmin is ' + result);
+      this.getLeave();
+    }, (reason) => {
+      this.getLeave();
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
   }
 
   openFilter() {
+
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -110,19 +133,39 @@ export class LeaveComponent implements OnInit {
   openDeleteCustomer(element: any, view: string){
   }
 
-  newSuperAdmin() {
-
-  }
 
   toggleColumn(column:any) {
 
   }
 
-  openSuperAdminDialog(element:any, edit: string) {
+  openDialog(element: any, mode: any) {
+    console.log(element)
+    this.modalOption.backdrop = 'static';
+    this.modalOption.keyboard = false;
+    this.modalOption.size = 'xl'
+    const modalRef = this.modalService.open(LeavemodalComponent, this.modalOption);
+    modalRef.componentInstance.mode = mode;
+    modalRef.componentInstance.fromParent = element;
+    modalRef.componentInstance.displayedColumns = this.displayedColumns;
+    modalRef.componentInstance.fDisplayedColumns = this.fDisplayedColumns;
+    modalRef.result.then((result) => {
+      this.getLeave();
+    }, (reason) => {
+      this.getLeave();
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
 
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
   }
 
   openSuperAdminDelete(deleteContent:any, element:any) {
-
   }
 }

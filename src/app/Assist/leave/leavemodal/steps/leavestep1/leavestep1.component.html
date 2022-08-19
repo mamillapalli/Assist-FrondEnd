@@ -1,0 +1,116 @@
+<div class="card-body">
+  <div [formGroup]="leaveRequestForm" id="form">
+    <div class="form-group row">
+      <h3 class="fw-bolder text-dark">Leave Request Info</h3>
+    </div>
+    <div class="container mt-5 ">
+      <div class="form-group row">
+        <div class="col-3">
+          <div class="floating-label_mandatory">
+            <input class="floating-input_mandatory" type="text" name="resourceId" id="resourceId"
+                   formControlName="resourceId"
+                   [class.is-invalid]="isControlInvalid('resourceId')"
+                   [class.is-valid]="isControlValid('resourceId')"
+            >
+            <label class="label_OA required">Resource Id</label>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="floating-label_mandatory">
+            <input type="text" class="floating-input_mandatory" autocomplete="off"
+                   name="approverId"
+                   formControlName="approverId"
+                   [class.is-invalid]="isControlInvalid('approverId')"
+                   [class.is-valid]="isControlValid('approverId')"
+            />
+            <label class="label_OA_mandatory">Approver Id </label>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="floating-label_mandatory">
+            <input type="name" class="floating-input_mandatory" autocomplete="off"
+                   name="name"
+                   formControlName="name"/>
+            <label class="label_OA_mandatory">Name</label>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="floating-label">
+            <input type="text" class="floating-input" autocomplete="off"
+                   name="description"
+                   formControlName="description"
+            />
+            <label class="label_OA">Description</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container mt-5 ">
+      <div class="form-group row">
+        <div class="col-3">
+          <div class="floating-label">
+            <input class="floating-input" type="text" name="contactAddress" id="contactAddress"
+                   formControlName="contactAddress">
+            <label class="label_OA">Contact Address</label>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="floating-label">
+            <input class="floating-input_mandatory" type="date" name="startDate" id="startDate"
+                   formControlName="startDate" name="startDate"
+                   [class.is-invalid]="isControlInvalid('startDate')"
+                   [class.is-valid]="isControlValid('startDate')">
+            <label class="label_OA required">Start Date</label>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="floating-label_mandatory">
+            <input class="floating-input_mandatory" type="date" name="endDate" id="endDate"
+                   formControlName="endDate" name="expiryDate" [class.is-invalid]="isControlInvalid('endDate')"
+                   [class.is-valid]="isControlValid('endDate')">
+            <label class="label_OA required">Expiry Date</label>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="floating-label_mandatory">
+            <input type="text" class="floating-input_mandatory" autocomplete="off"
+                   name="numberOfDays"
+                   formControlName="numberOfDays"
+                   [class.is-invalid]="isControlInvalid('numberOfDays')"
+                   [class.is-valid]="isControlValid('numberOfDays')"
+            />
+            <label class="label_OA_mandatory">Number of Days</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container mt-5 ">
+      <div class="form-group row">
+        <div class="col-3">
+          <div class="floating-label">
+            <input class="floating-input" type="text" name="payPercentage" id="payPercentage"
+                   formControlName="payPercentage">
+            <label class="label_OA">Pay Percentage</label>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="floating-label_mandatory form-switch">
+            <input class="floating-input form-check-input" type="checkbox" id="ticketsPaid" name="ticketsPaid" value="true" checked>
+            <label class="label_OA_mandatory form-check-label required">Is Tickets Paid</label>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="floating-label">
+            <input type="text" class="floating-input" autocomplete="off"
+                   name="ticketsTo"
+                   formControlName="ticketsTo"
+                   [class.is-invalid]="isControlInvalid('ticketsTo')"
+                   [class.is-valid]="isControlValid('ticketsTo')"
+            />
+            <label class="label_OA">Tickets To</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

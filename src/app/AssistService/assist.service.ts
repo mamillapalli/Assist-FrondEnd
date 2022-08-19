@@ -6,6 +6,7 @@ import {AuthService} from "../modules/auth";
 import {AuthModel} from "../modules/auth/models/auth.model";
 import {NgxSpinnerService} from "ngx-spinner";
 import {NotificationService} from "./notification.service";
+import Swal from "sweetalert2";
 
 @Injectable({
   providedIn: 'root'
@@ -16,9 +17,16 @@ export class assistService {
   protected _isLoading$ = new BehaviorSubject<boolean>(false);
   protected _errorMessage = new BehaviorSubject<string>('');
   private authToken: AuthModel | any;
+  httpHeaders: any
 
   constructor(private http: HttpClient, private authService: AuthService,private spinner: NgxSpinnerService,
               public notifyService: NotificationService) {
+    this.authToken = this.authService.getAuthFromLocalStorage();
+    this.httpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${this.authToken?.jwt}`,
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'
+    });
   }
 
   getMethod(url: any, statusType: any) {
@@ -65,7 +73,7 @@ export class assistService {
     });
   }
 
-  toggleColumn(column: any,displayedColumns:any) {
+  public toggleColumn(column: any,displayedColumns:any) {
     if (column.isActive && column.name !== 'columnSetting') {
       if (column.possition > displayedColumns.length - 1) {
         displayedColumns.push(column.name);
@@ -76,6 +84,56 @@ export class assistService {
       let i = displayedColumns.indexOf(column.name);
       let opr = i > -1 ? displayedColumns.splice(i, 1) : undefined;
     }
+  }
+
+
+  callMethod(url:any,mode:any,data:any,activeModal:any): any{
+    this.postMethod(url,mode,data).subscribe(res => {
+      if (res !== undefined) {
+        Swal.fire({
+          title: 'Add Record Successfully',
+          icon: 'success'
+        }).then((result) => {
+          if (result.value) {
+            Swal.close();
+            activeModal.close();
+          }
+        });
+        return "success";
+      } else {
+        Swal.fire({
+          title: 'Error is occurred.',
+          icon: 'error'
+        }).then((result) => {
+          if (result.value) {
+            Swal.close();
+          }
+        });
+        return "failure";
+      }
+    }, (error: { message: any; }) => {
+      console.error('There was an error!', error.message);
+      activeModal.close();
+      return;
+    });
+  }
+
+
+  public postMethod(url:any,mode:any,data:any): Observable<any>{
+    this.spinner.show();
+    const dataJsonFormat = JSON.stringify(data);
+    console.log(dataJsonFormat)
+    console.log(url)
+    return this.http.post<any>(url, dataJsonFormat, {
+      headers: this.httpHeaders
+    }).pipe(
+      delay(100),
+      catchError((err) => {
+        this.notifyService.showError(err.message, 'Error')
+        return of(undefined);
+      }),
+      finalize(() => this.spinner.hide())
+    );
   }
 
 }

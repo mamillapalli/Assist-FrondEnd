@@ -53,9 +53,7 @@
                cdkDropListOrientation="horizontal"
                (cdkDropListDropped)="drop($event)"
                matSort (matSortChange)="sortChanges($event)"
-               style="overflow-x: scroll; overflow-y: scroll"
-        >
-
+               style="overflow-x: scroll; overflow-y: scroll" >
           <ng-container matColumnDef="columnSetting">
             <th mat-header-cell cdkDrag *matHeaderCellDef>
               <div>
@@ -118,7 +116,7 @@
             <th mat-header-cell cdkDrag *matHeaderCellDef mat-sort-header> Actions</th>
             <td mat-cell *matCellDef="let element">
               <ng-container *ngIf="(this.authRoles === 'SUPER_ADMIN' )">
-                <a (click)="openSuperAdminDialog(element,'edit')" title="Edit Transaction"
+                <a (click)="openDialog(element,'edit')" title="Edit Transaction"
                    class="btn btn-icon btn-light-primary btn-active-light btn-sm me-1">
                 <span [inlineSVG]="'./assets/media/svg/icons/Communication/Write.svg'"
                       class="svg-icon svg-icon-md">
@@ -126,16 +124,16 @@
                 </a>
               </ng-container>
               <ng-container *ngIf="this.authRoles === 'SUPER_ADMIN'">
-                <a ng-if="(this.authRoles.includes('SUPER_ADMIN')" title="View Transaction"
-                   (click)="openSuperAdminDialog(element,'view')"
+                <a ng-if="(this.authRoles.includes('SUPER_ADMIN')" title="View Leave Request"
+                   (click)="openDialog(element,'view')"
                    class="btn btn-icon btn-light-success btn-active-light btn-sm me-1">
                 <span [inlineSVG]="'./assets/media/svg/icons/Code/Compiling.svg'"
                       class="svg-icon svg-icon-md"></span>
                 </a>
               </ng-container>
-              <ng-container *ngIf="(this.authRoles === 'SUPER_ADMIN') && element.transactionStatus === 'PENDING' ">
+              <ng-container *ngIf="element.approverId !== element.resourceId">
                 <a
-                  title="Authorize Transaction" (click)="openSuperAdminDialog(element,'auth')"
+                  title="Authorize Transaction" (click)="openDialog(element,'auth')"
                   class="btn btn-icon btn-light-warning btn-active-light btn-sm me-1">
                 <span [inlineSVG]="'./assets/media/icons/duotune/arrows/arr064.svg'"
                       class="svg-icon svg-icon-md"></span>
