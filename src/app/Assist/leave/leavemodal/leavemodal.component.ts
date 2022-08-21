@@ -36,6 +36,7 @@ export class LeavemodalComponent implements OnInit {
   @Output()displayedColumns: any
   @Output()fDisplayedColumns: any
   modal: any;
+  id:any;
 
 
   constructor(private router: Router,
@@ -74,6 +75,14 @@ export class LeavemodalComponent implements OnInit {
         this.checkNextStage = false;
         const url = '/leaves';
         const returnValue = this.aService.callMethod(url, 'new', this.sendLeaverequest, this.activeModal);
+        if (returnValue === "success") {
+          this.currentStep$.next(nextStep);
+          this.activeModal.close();
+        }
+      } else if (this.mode === 'edit') {
+        this.checkNextStage = false;
+        const url = '/leaves/'+this.id;
+        const returnValue = this.aService.callMethod(url, 'edit', this.sendLeaverequest, this.activeModal);
         if (returnValue === "success") {
           this.currentStep$.next(nextStep);
           this.activeModal.close();

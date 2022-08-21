@@ -88,42 +88,134 @@ export class assistService {
 
 
   callMethod(url:any,mode:any,data:any,activeModal:any): any{
-    this.postMethod(url,mode,data).subscribe(res => {
-      if (res !== undefined) {
-        Swal.fire({
-          title: 'Add Record Successfully',
-          icon: 'success'
-        }).then((result) => {
-          if (result.value) {
-            Swal.close();
-            activeModal.close();
-          }
-        });
-        return "success";
-      } else {
-        Swal.fire({
-          title: 'Error is occurred.',
-          icon: 'error'
-        }).then((result) => {
-          if (result.value) {
-            Swal.close();
-          }
-        });
-        return "failure";
-      }
-    }, (error: { message: any; }) => {
-      console.error('There was an error!', error.message);
-      activeModal.close();
-      return;
-    });
+    if(mode == "new") {
+      this.postMethod(url, mode, data).subscribe(res => {
+        if (res !== undefined) {
+          Swal.fire({
+            title: 'Add Record Successfully',
+            icon: 'success'
+          }).then((result) => {
+            if (result.value) {
+              Swal.close();
+              activeModal.close();
+            }
+          });
+          return "success";
+        } else {
+          Swal.fire({
+            title: 'Error is occurred.',
+            icon: 'error'
+          }).then((result) => {
+            if (result.value) {
+              Swal.close();
+            }
+          });
+          return "failure";
+        }
+      }, (error: { message: any; }) => {
+        console.error('There was an error!', error.message);
+        activeModal.close();
+        return;
+      });
+    }
+    else if(mode == "edit") {
+      this.putMethod(url, mode, data).subscribe(res => {
+        if (res !== undefined) {
+          Swal.fire({
+            title: 'Edit Record Successfully',
+            icon: 'success'
+          }).then((result) => {
+            if (result.value) {
+              Swal.close();
+              activeModal.close();
+            }
+          });
+          return "success";
+        } else {
+          Swal.fire({
+            title: 'Error is occurred.',
+            icon: 'error'
+          }).then((result) => {
+            if (result.value) {
+              Swal.close();
+            }
+          });
+          return "failure";
+        }
+      }, (error: { message: any; }) => {
+        console.error('There was an error!', error.message);
+        activeModal.close();
+        return;
+      });
+    }
+    else if(mode == "auth") {
+      this.putMethod(url, mode, data).subscribe((res: any) => {
+        if (res !== undefined) {
+          Swal.fire({
+            title: 'Approved Record Successfully',
+            icon: 'success'
+          }).then((result) => {
+            if (result.value) {
+              Swal.close();
+              activeModal.close();
+            }
+          });
+          return "success";
+        } else {
+          Swal.fire({
+            title: 'Error is occurred.',
+            icon: 'error'
+          }).then((result) => {
+            if (result.value) {
+              Swal.close();
+            }
+          });
+          return "failure";
+        }
+      }, (error: { message: any; }) => {
+        console.error('There was an error!', error.message);
+        activeModal.close();
+        return;
+      });
+    }
+    else if(mode == "delete") {
+      this.deleteMethod(url, mode).subscribe((res: any) => {
+        if (res !== undefined) {
+          Swal.fire({
+            title: 'Delete Record Successfully',
+            icon: 'success'
+          }).then((result) => {
+            if (result.value) {
+              Swal.close();
+              activeModal.close();
+            }
+          });
+          return "success";
+        } else {
+          Swal.fire({
+            title: 'Error is occurred.',
+            icon: 'error'
+          }).then((result) => {
+            if (result.value) {
+              Swal.close();
+            }
+          });
+          return "failure";
+        }
+      }, (error: { message: any; }) => {
+        console.error('There was an error!', error.message);
+        activeModal.close();
+        return;
+      });
+    }
   }
 
 
   public postMethod(url:any,mode:any,data:any): Observable<any>{
     this.spinner.show();
     const dataJsonFormat = JSON.stringify(data);
-    console.log(dataJsonFormat)
-    console.log(url)
+    console.log(dataJsonFormat);
+    console.log(url);
     return this.http.post<any>(url, dataJsonFormat, {
       headers: this.httpHeaders
     }).pipe(
@@ -136,4 +228,33 @@ export class assistService {
     );
   }
 
+  public putMethod(url: any, mode: any, data: any) {
+    this.spinner.show();
+    const dataJsonFormat = JSON.stringify(data);
+    console.log(dataJsonFormat);
+    return this.http.put<any>(url, dataJsonFormat, {
+      headers: this.httpHeaders
+    }).pipe(
+      delay(100),
+      catchError((err) => {
+        this.notifyService.showError(err.message, 'Error')
+        return of(undefined);
+      }),
+      finalize(() => this.spinner.hide())
+    );
+  }
+
+  private deleteMethod(url: any, mode: any,) {
+    this.spinner.show();
+    return this.http.delete<any>(url,  {
+      headers: this.httpHeaders
+    }).pipe(
+      delay(100),
+      catchError((err) => {
+        this.notifyService.showError(err.message, 'Error')
+        return of(undefined);
+      }),
+      finalize(() => this.spinner.hide())
+    );
+  }
 }

@@ -67,7 +67,7 @@
           <div class="floating-label_mandatory">
             <input class="floating-input_mandatory" type="date" name="endDate" id="endDate"
                    formControlName="endDate" name="expiryDate" [class.is-invalid]="isControlInvalid('endDate')"
-                   [class.is-valid]="isControlValid('endDate')">
+                   [class.is-valid]="isControlValid('endDate')" (change)="calNumberOfDays();">
             <label class="label_OA required">Expiry Date</label>
           </div>
         </div>

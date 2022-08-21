@@ -66,6 +66,9 @@ import { TestComponent } from './Assist/test/test.component';
 import { LeavemodalComponent } from './Assist/leave/leavemodal/leavemodal.component';
 import { Leavestep1Component } from './Assist/leave/leavemodal/steps/leavestep1/leavestep1.component';
 import { LeaveApproverComponent } from './Assist/leave-approver/leave-approver.component';
+import { ApprovermodalComponent } from './Assist/leave/approvermodal/approvermodal.component';
+import { InapprovermodalComponent } from './Assist/leave/approvermodal/inapprovermodal/inapprovermodal.component';
+import { Inapproverstep1Component } from './Assist/leave/approvermodal/inapprovermodal/steps/inapproverstep1/inapproverstep1.component';
 
 
 function appInitializer(authService: AuthService) {
@@ -78,7 +81,7 @@ function appInitializer(authService: AuthService) {
 }
 
 @NgModule({
-  declarations: [AppComponent, EmployeeComponent, LeaveComponent, TestComponent, LeavemodalComponent, Leavestep1Component, LeaveApproverComponent],
+  declarations: [AppComponent, EmployeeComponent, LeaveComponent, TestComponent, LeavemodalComponent, Leavestep1Component, LeaveApproverComponent, ApprovermodalComponent, InapprovermodalComponent, Inapproverstep1Component],
   imports: [
     BrowserModule,
     CommonModule,

@@ -100,4 +100,14 @@ export class Leavestep1Component implements OnInit {
     );
   }
 
+  calNumberOfDays() {
+    console.log("start Date is :" + this.f.startDate.value);
+    console.log("end Date is :" + this.f.endDate.value);
+    const dateone = new Date(this.f.startDate.value);
+    const datetwo = new Date(this.f.endDate.value);
+    const oneDay = 1000 * 60 * 60 * 24;
+    const diffInTime = datetwo.getTime() - dateone.getTime();
+    const diffInDays = Math.round(diffInTime / oneDay);
+    this.f.numberOfDays.setValue(diffInDays);
+  }
 }

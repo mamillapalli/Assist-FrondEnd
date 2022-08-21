@@ -4,5 +4,11 @@
     "secure": true,
     "changeOrigin": true,
     "logLevel": "debug"
+  },
+  "/approveleaves": {
+    "target": "http://localhost:8001",
+    "secure": true,
+    "changeOrigin": true,
+    "logLevel": "debug"
   }
 }
