@@ -15,7 +15,7 @@ export class AuthHTTPService {
 
   // public methods
   login(emailAddress: string, password: string): Observable<any> {
-    return this.http.post<AuthModel>(`http://localhost:8001/authenticate`, {
+    return this.http.post<AuthModel>(`http://localhost:57497/authenticate`, {
       emailAddress,
       password,
     });
@@ -28,7 +28,7 @@ export class AuthHTTPService {
 
   // Your server should check email => If email exists send link to the user and return true | If email doesn't exist return false
   forgotPassword(email: string): Observable<boolean> {
-    return this.http.post<boolean>(`${API_USERS_URL}/forgot-password`, {
+    return this.http.post<boolean>(`http://localhost:57497/forgot-password`, {
       email,
     });
   }
@@ -37,7 +37,7 @@ export class AuthHTTPService {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-    return this.http.get<UserModel>(`http://localhost:8001/profile`, {
+    return this.http.get<UserModel>(`http://localhost:57497/profile`, {
       headers: httpHeaders,
     });
   }

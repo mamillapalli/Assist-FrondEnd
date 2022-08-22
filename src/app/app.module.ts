@@ -11,7 +11,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthService } from './modules/auth/services/auth.service';
 import { environment } from 'src/environments/environment';
-import { EmployeeComponent } from './Assist/employee/employee.component';
 import { CommonModule } from '@angular/common';
 //
 import { DataTablesModule } from 'angular-datatables';
@@ -62,7 +61,6 @@ import {NgxMatSelectSearchModule} from "ngx-mat-select-search";
 import {AngularMultiSelectModule} from "angular2-multiselect-dropdown";
 import {LazyLoadImageModule} from "ng-lazyload-image";
 import { LeaveComponent } from './Assist/leave/leave.component';
-import { TestComponent } from './Assist/test/test.component';
 import { LeavemodalComponent } from './Assist/leave/leavemodal/leavemodal.component';
 import { Leavestep1Component } from './Assist/leave/leavemodal/steps/leavestep1/leavestep1.component';
 import { LeaveApproverComponent } from './Assist/leave-approver/leave-approver.component';
@@ -81,7 +79,7 @@ function appInitializer(authService: AuthService) {
 }
 
 @NgModule({
-  declarations: [AppComponent, EmployeeComponent, LeaveComponent, TestComponent, LeavemodalComponent, Leavestep1Component, LeaveApproverComponent, ApprovermodalComponent, InapprovermodalComponent, Inapproverstep1Component],
+  declarations: [AppComponent,  LeaveComponent,  LeavemodalComponent, Leavestep1Component, LeaveApproverComponent, ApprovermodalComponent, InapprovermodalComponent, Inapproverstep1Component],
   imports: [
     BrowserModule,
     CommonModule,

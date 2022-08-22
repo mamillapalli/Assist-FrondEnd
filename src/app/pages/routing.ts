@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import {LeaveComponent} from "../Assist/leave/leave.component";
-import {TestComponent} from "../Assist/test/test.component";
 
 const Routing: Routes = [
   {
@@ -11,15 +10,6 @@ const Routing: Routes = [
   {
     path: 'leave', // <= Page URL
     component: LeaveComponent // <= Page component registration
-  },
-  {
-    path: 'test', // <= Page URL
-    component: TestComponent // <= Page component registration
-  },
-  {
-    path: 'employee',
-    loadChildren: () =>
-      import('../Assist/employee/employee.module').then((m) => m.EmployeeModule),
   },
   {
     path: 'builder',
