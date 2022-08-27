@@ -9,7 +9,7 @@
              current: currentStep$.value === 1}"
              class="stepper-item"
         >
-          <h3 class="stepper-title">Leave Request Info</h3>
+          <h3 class="stepper-title">Roles Info</h3>
         </div>
       </div>
     </div>
@@ -21,12 +21,12 @@
     >
       <div class="current">
         <ng-container *ngIf="currentStep$.value === 1">
-          <app-inapproverstep1 [defaultValues]="account$.value"
+          <app-rolesstep1 [defaultValues]="account$.value"
                           [formValue]="formValue"
                           [mode]=mode
                           [updateParentModel]="updateAccount"
                           class="w-100"
-          ></app-inapproverstep1>
+          ></app-rolesstep1>
         </ng-container>
       </div>
 
@@ -55,18 +55,6 @@
               type="button"
             >
               Cancel
-            </button>
-          </ng-container>
-        </div>
-
-        <div class="mr-2">
-          <ng-container>
-            <button
-              (click)="rejectModal()"
-              class="btn btn-sm btn-light-warning btn-light-primary me-2"
-              type="button"
-            >
-              Reject
             </button>
           </ng-container>
         </div>

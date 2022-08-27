@@ -178,6 +178,36 @@ export class assistService {
         return;
       });
     }
+    else if(mode == "rej") {
+      this.putMethod(url, mode, data).subscribe((res: any) => {
+        if (res !== undefined) {
+          Swal.fire({
+            title: 'Approved Record Successfully',
+            icon: 'success'
+          }).then((result) => {
+            if (result.value) {
+              Swal.close();
+              activeModal.close();
+            }
+          });
+          return "success";
+        } else {
+          Swal.fire({
+            title: 'Error is occurred.',
+            icon: 'error'
+          }).then((result) => {
+            if (result.value) {
+              Swal.close();
+            }
+          });
+          return "failure";
+        }
+      }, (error: { message: any; }) => {
+        console.error('There was an error!', error.message);
+        activeModal.close();
+        return;
+      });
+    }
     else if(mode == "delete") {
       this.deleteMethod(url, mode).subscribe((res: any) => {
         if (res !== undefined) {

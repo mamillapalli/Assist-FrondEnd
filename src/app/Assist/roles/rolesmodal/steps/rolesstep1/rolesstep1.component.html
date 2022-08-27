@@ -1,0 +1,22 @@
+<div class="card-body">
+  <div [formGroup]="rolesRequestForm" id="form">
+    <div class="form-group row">
+      <h3 class="fw-bolder text-dark">Roles Request Info</h3>
+    </div>
+    <div class="container mt-5 ">
+      <div class="form-group row">
+        <div class="col-3">
+          <div class="floating-label_mandatory">
+            <input type="text" class="floating-input_mandatory" autocomplete="off"
+                   name="name"
+                   formControlName="name"
+                   [class.is-invalid]="isControlInvalid('name')"
+                   [class.is-valid]="isControlValid('name')"
+            />
+            <label class="label_OA_mandatory"> Roles Name </label>
+          </div>
+  </div>
+</div>
+    </div>
+  </div>
+</div>

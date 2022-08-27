@@ -1,18 +1,18 @@
 {
   "/leaves": {
-    "target": "http://localhost:8001",
+    "target": "http://localhost:8765",
     "secure": true,
     "changeOrigin": true,
     "logLevel": "debug"
   },
   "/approveleaves": {
-    "target": "http://localhost:8001",
+    "target": "http://localhost:8765",
     "secure": true,
     "changeOrigin": true,
     "logLevel": "debug"
   },
   "/": {
-    "target": "http://localhost:57497",
+    "target": "http://localhost:8765",
     "secure": true,
     "changeOrigin": true,
     "logLevel": "debug"

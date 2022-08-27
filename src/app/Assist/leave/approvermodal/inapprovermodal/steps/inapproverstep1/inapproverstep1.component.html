@@ -110,17 +110,17 @@
             <label class="label_OA">Tickets To</label>
           </div>
         </div>
-        <div class="col-3">
-          <div class="floating-label_mandatory">
-            <input type="text" class="floating-label_mandatory" autocomplete="off"
-                   name="approverComments"
-                   formControlName="approverComments"
-                   [class.is-invalid]="isControlInvalid('approverComments')"
-                   [class.is-valid]="isControlValid('approverComments')"
-            />
-            <label class="label_OA_mandatory">Approver Comments</label>
+          <div class="col-3">
+            <div class="floating-label_mandatory">
+              <input type="text" class="floating-input_mandatory" autocomplete="off"
+                     name="approverComments"
+                     formControlName="approverComments"
+                     [class.is-invalid]="isControlInvalid('approverComments')"
+                     [class.is-valid]="isControlValid('approverComments')"
+              />
+              <label class="label_OA_mandatory">Approver Comments</label>
+            </div>
           </div>
-        </div>
       </div>
     </div>
   </div>

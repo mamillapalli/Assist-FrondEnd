@@ -11,7 +11,7 @@ import {assistService} from "../../../../../AssistService/assist.service";
 })
 export class Leavestep1Component implements OnInit {
 
-  @Input('updateParentModel') updateParentModel: ( part: Partial<leaverequest>, isFormValid: boolean ) => void;
+  @Input('updateParentModel') updateParentModel: (part: Partial<leaverequest>, isFormValid: boolean ) => void;
   @Input() defaultValues: Partial<leaverequest>;
   private unsubscribe: Subscription[] = [];
   leaveRequestForm: FormGroup;

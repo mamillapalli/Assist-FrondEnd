@@ -1,6 +1,6 @@
 import {Component, OnInit, Output, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
-import {leaverequest} from "../../../AssistModel/leaverequest";
+import {rolesrequest} from "../../../AssistModel/rolesrequest";
 import {ModalDismissReasons, NgbActiveModal, NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
 import {Subscription} from "rxjs";
 import {MatPaginator} from "@angular/material/paginator";
@@ -20,7 +20,7 @@ import {InapprovermodalComponent} from "./inapprovermodal/inapprovermodal.compon
   styleUrls: ['./approvermodal.component.scss']
 })
 export class ApprovermodalComponent implements OnInit {
-  dataSource: any = new MatTableDataSource<leaverequest>();
+  dataSource: any = new MatTableDataSource<rolesrequest>();
   @Output() displayedColumns:  string[] = ['columnSetting','id', 'name', 'startDate', 'endDate', 'status', 'approverComments', 'actions'];
   @Output() fDisplayedColumns: string[] = ['customerId','id', 'name', 'startDate', 'endDate', 'status','approverComments'];
   modalOption: NgbModalOptions = {};
@@ -79,7 +79,7 @@ export class ApprovermodalComponent implements OnInit {
   }
 
   public getLeaveByApprover() {
-    const sb = this.aService.getMethod('/leavesByApproverId/77777/WAITING', '',).subscribe((res) => {
+    const sb = this.aService.getMethod('/assist-leave/leavesByApproverId/77777/WAITING', '',).subscribe((res) => {
       this.dataSource.data = res;
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;

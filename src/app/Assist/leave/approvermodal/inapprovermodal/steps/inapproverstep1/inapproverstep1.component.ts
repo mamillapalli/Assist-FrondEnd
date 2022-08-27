@@ -11,7 +11,7 @@ import {assistService} from "../../../../../../AssistService/assist.service";
 })
 export class Inapproverstep1Component implements OnInit {
 
-  @Input('updateParentModel') updateParentModel: ( part: Partial<leaverequest>, isFormValid: boolean ) => void;
+  @Input('updateParentModel') updateParentModel: (part: Partial<leaverequest>, isFormValid: boolean ) => void;
   @Input() defaultValues: Partial<leaverequest>;
   private unsubscribe: Subscription[] = [];
   leaveRequestForm: FormGroup;
@@ -29,7 +29,7 @@ export class Inapproverstep1Component implements OnInit {
       if(this.mode === 'auth' || this.mode === 'delete' || this.mode === 'view')
       {
         this.leaveRequestForm.disable()
-        this.leaveRequestForm.value.approverComments.enable;
+        this.f.approverComments.enable();
         this.ReadOnlyCheckBox = true;
       }
     }

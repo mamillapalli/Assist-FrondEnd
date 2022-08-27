@@ -1,5 +1,7 @@
 import { Routes } from '@angular/router';
 import {LeaveComponent} from "../Assist/leave/leave.component";
+import {RolesComponent} from "../Assist/roles/roles.component";
+import {AddResourceComponent} from "../Assist/add-resource/add-resource.component";
 
 const Routing: Routes = [
   {
@@ -8,9 +10,18 @@ const Routing: Routes = [
       import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
   },
   {
+    path: 'roles', // <= Page URL
+    component: RolesComponent // <= Page component registration
+  },
+  {
+    path: 'resources', // <= Page URL
+    component: AddResourceComponent // <= Page component registration
+  },
+  {
     path: 'leave', // <= Page URL
     component: LeaveComponent // <= Page component registration
   },
+
   {
     path: 'builder',
     loadChildren: () =>

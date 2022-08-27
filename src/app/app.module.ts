@@ -67,6 +67,12 @@ import { LeaveApproverComponent } from './Assist/leave-approver/leave-approver.c
 import { ApprovermodalComponent } from './Assist/leave/approvermodal/approvermodal.component';
 import { InapprovermodalComponent } from './Assist/leave/approvermodal/inapprovermodal/inapprovermodal.component';
 import { Inapproverstep1Component } from './Assist/leave/approvermodal/inapprovermodal/steps/inapproverstep1/inapproverstep1.component';
+import { RolesComponent } from './Assist/roles/roles.component';
+import { RolesmodalComponent } from './Assist/roles/rolesmodal/rolesmodal.component';
+import { Rolesstep1Component } from './Assist/roles/rolesmodal/steps/rolesstep1/rolesstep1.component';
+import {AddResourceComponent} from "./Assist/add-resource/add-resource.component";
+import {Resourcestep1Component} from "./Assist/add-resource/resourcemodel/steps/resourcestep1/resourcestep1.component";
+import {ResourcemodelComponent} from "./Assist/add-resource/resourcemodel/resourcemodel.component";
 
 
 function appInitializer(authService: AuthService) {
@@ -79,7 +85,21 @@ function appInitializer(authService: AuthService) {
 }
 
 @NgModule({
-  declarations: [AppComponent,  LeaveComponent,  LeavemodalComponent, Leavestep1Component, LeaveApproverComponent, ApprovermodalComponent, InapprovermodalComponent, Inapproverstep1Component],
+  declarations: [AppComponent,
+    LeaveComponent,
+    LeavemodalComponent,
+    Leavestep1Component,
+    LeaveApproverComponent,
+    ApprovermodalComponent,
+    InapprovermodalComponent,
+    Inapproverstep1Component,
+    RolesComponent,
+    RolesmodalComponent,
+    Rolesstep1Component,
+    AddResourceComponent,
+    Resourcestep1Component,
+    ResourcemodelComponent
+  ],
   imports: [
     BrowserModule,
     CommonModule,

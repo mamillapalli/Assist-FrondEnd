@@ -1,7 +1,7 @@
-import {AfterViewInit, Component, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, OnInit, Output, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {rolesrequest} from "../../AssistModel/rolesrequest";
-import {ModalDismissReasons, NgbActiveModal, NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
+import {ModalDismissReasons, NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
 import {Subscription} from "rxjs";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort, Sort} from "@angular/material/sort";
@@ -10,20 +10,22 @@ import {filterCondition} from "../../AssistModel/filterCondition";
 import {filterFunction} from "../../AssistModel/filterFunction";
 import {AuthService} from "../../modules/auth";
 import {NotificationService} from "../../AssistService/notification.service";
-import {CdkDragDrop} from "@angular/cdk/drag-drop";
 import {assistService} from "../../AssistService/assist.service";
-import {LeavemodalComponent} from "./leavemodal/leavemodal.component";
-import {ApprovermodalComponent} from "./approvermodal/approvermodal.component";
+import {LeavemodalComponent} from "../leave/leavemodal/leavemodal.component";
+import {CdkDragDrop} from "@angular/cdk/drag-drop";
+import {ApprovermodalComponent} from "../leave/approvermodal/approvermodal.component";
+import {RolesmodalComponent} from "./rolesmodal/rolesmodal.component";
 
 @Component({
-  selector: 'app-leave',
-  templateUrl: './leave.component.html',
-  styleUrls: ['./leave.component.scss']
+  selector: 'app-roles',
+  templateUrl: './roles.component.html',
+  styleUrls: ['./roles.component.scss']
 })
-export class LeaveComponent implements OnInit,AfterViewInit {
+export class RolesComponent implements OnInit {
+
   dataSource: any = new MatTableDataSource<rolesrequest>();
-  @Output() displayedColumns:  string[] = ['columnSetting','id', 'name', 'startDate', 'endDate', 'status', 'approverComments','transactionStatus','actions'];
-  @Output() fDisplayedColumns: string[] = ['customerId', 'id', 'name', 'startDate', 'endDate', 'status','approverComments','transactionStatus'];
+  @Output() displayedColumns:  string[] = ['columnSetting','role_id', 'name', 'createdDate', 'createdUser', 'transactionStatus','actions'];
+  @Output() fDisplayedColumns: string[] = ['role_id',  'name', 'createdDate', 'createdUser', 'transactionStatus'];
   modalOption: NgbModalOptions = {};
   private subscriptions: Subscription[] = [];
   authRoles: any;
@@ -58,12 +60,10 @@ export class LeaveComponent implements OnInit,AfterViewInit {
 
   ngOnInit(): void {
     this.columns = [
-      { columnDef: 'id', header: 'Id' },
+      { columnDef: 'role_id', header: 'Role Id' },
       { columnDef: 'name', header: 'Name' },
-      { columnDef: 'startDate', header: 'StartDate' },
-      { columnDef: 'endDate', header: 'End Date' },
-      { columnDef: 'status', header: 'Status' },
-      { columnDef: 'approverComments', header: 'Approver Comments' },
+      { columnDef: 'createdDate', header: 'Created Date' },
+      { columnDef: 'createdUser', header: 'Created User' },
       { columnDef: 'transactionStatus', header: 'Transaction Status' }
 
     ]
@@ -78,19 +78,19 @@ export class LeaveComponent implements OnInit,AfterViewInit {
   }
 
   public getLeave() {
-    const sb = this.aService.getMethod('assist-leave/leaves', '',).subscribe((res) => {
+    const sb = this.aService.getMethod('/assistadmin/roles', '',).subscribe((res) => {
+      console.log("response is :"+ res)
       this.dataSource.data = res;
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+      //this.totalRows = res.totalElements
     });
     this.subscriptions.push(sb);
   }
 
-  createLeaveRequest() {
+  createRolesRequest() {
     this.modalOption.backdrop = 'static';
     this.modalOption.keyboard = false;
     this.modalOption.size = 'xl'
-    const modalRef = this.modalService.open(LeavemodalComponent, this.modalOption);
+    const modalRef = this.modalService.open(RolesmodalComponent, this.modalOption);
     modalRef.componentInstance.mode = 'new';
     modalRef.componentInstance.displayedColumns = this.displayedColumns;
     modalRef.componentInstance.fDsplayedColumns = this.fDisplayedColumns;
@@ -104,7 +104,29 @@ export class LeaveComponent implements OnInit,AfterViewInit {
   }
 
   openFilter() {
-
+    // console.log('open filter')
+    // this.modalOption.backdrop = 'static';
+    // this.modalOption.keyboard = false;
+    // const modalRef = this.modalService.open(FilterComponent, this.modalOption);
+    // console.log(this.fDisplayedColumns)
+    // modalRef.componentInstance.fDisplayedColumns = this.fDisplayedColumns;
+    // modalRef.result.then((result) => {
+    //   if (result.valid && result.value.filterOption.length > 0) {
+    //     const sb = this.oaCommonService.getFilterWithPagination(result, 'filter', '/oaadmin/api/v1/customers', this.currentPage, this.pageSize, this.sortData).subscribe((res: any) => {
+    //       this.dataSource.data = res.content;
+    //       this.totalRows = res.totalElements
+    //     });
+    //     this.subscriptions.push(sb);
+    //   } else {
+    //     const sb = this.oaCommonService.getFilterWithPagination(result, 'all', '/oaadmin/api/v1/customers', this.currentPage, this.pageSize, this.sortData).subscribe((res: any) => {
+    //       this.dataSource.data = res.content;
+    //       this.totalRows = res.totalElements
+    //     });
+    //     this.subscriptions.push(sb);
+    //   }
+    // }, (reason) => {
+    //   this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    // });
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -137,7 +159,7 @@ export class LeaveComponent implements OnInit,AfterViewInit {
   openDeleteCustomer(element: any, view: string){
     this.modalService.open(element, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
-      const url = '/assist-leave/leaves/'+element.id;
+      const url = '/assistadmin/'+element.id;
       if (result === 'yes') {
         //const returnValue = this.aService.callMethod(url, 'delete','',this.activeModal);
         this.getLeave();
@@ -157,7 +179,7 @@ export class LeaveComponent implements OnInit,AfterViewInit {
     this.modalOption.backdrop = 'static';
     this.modalOption.keyboard = false;
     this.modalOption.size = 'xl'
-    const modalRef = this.modalService.open(LeavemodalComponent, this.modalOption);
+    const modalRef = this.modalService.open(RolesmodalComponent, this.modalOption);
     modalRef.componentInstance.mode = mode;
     modalRef.componentInstance.fromParent = element;
     modalRef.componentInstance.displayedColumns = this.displayedColumns;
@@ -196,4 +218,5 @@ export class LeaveComponent implements OnInit,AfterViewInit {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
   }
+
 }

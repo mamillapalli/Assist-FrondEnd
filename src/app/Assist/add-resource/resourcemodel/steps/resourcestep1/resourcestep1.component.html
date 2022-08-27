@@ -1,0 +1,78 @@
+<div class="card-body">
+  <div [formGroup]="addResourceForm" id="form">
+    <div class="form-group row">
+      <h3 class="fw-bolder text-dark">Add Resource Info</h3>
+    </div>
+    <div class="container mt-5 ">
+      <div class="form-group row">
+        <div class="col-3">
+          <div class="floating-label_mandatory">
+            <input class="floating-input_mandatory" type="text" name="emailAddress" id="emailAddress"
+                   formControlName="emailAddress"
+                   [class.is-invalid]="isControlInvalid('emailAddress')"
+                   [class.is-valid]="isControlValid('emailAddress')"
+            >
+            <label class="label_OA required">Email Address</label>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="floating-label_mandatory">
+            <input class="floating-input_mandatory" type="text" name="firstName" id="firstName"
+                   formControlName="firstName"
+                   [class.is-invalid]="isControlInvalid('firstName')"
+                   [class.is-valid]="isControlValid('firstName')"
+            >
+            <label class="label_OA required">First Name</label>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="floating-label_mandatory">
+            <input type="text" class="floating-input_mandatory" autocomplete="off"
+                   name="lastName"
+                   formControlName="lastName"
+                   [class.is-invalid]="isControlInvalid('lastName')"
+                   [class.is-valid]="isControlValid('lastName')"
+            />
+            <label class="label_OA_mandatory">Last Name </label>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="floating-label">
+            <input class="floating-input_mandatory" type="date" name="birthDate" id="birthDate"
+                   formControlName="birthDate" name="birthDate"
+                   [class.is-invalid]="isControlInvalid('birthDate')"
+                   [class.is-valid]="isControlValid('birthDate')">
+            <label class="label_OA required">Birth Date</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container mt-5 ">
+      <div class="form-group row">
+        <div class="col-3">
+          <div class="floating-label">
+            <input class="floating-input_mandatory" type="date" name="joiningDate" id="joiningDate"
+                   formControlName="joiningDate" name="joiningDate"
+                   [class.is-invalid]="isControlInvalid('joiningDate')"
+                   [class.is-valid]="isControlValid('joiningDate')">
+            <label class="label_OA required">Joining Date</label>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="floating-label">
+            <input class="floating-input" type="text" name="roles" id="roles"
+                   formControlName="roles">
+            <label class="label_OA">roles</label>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="floating-label">
+            <input class="floating-input" type="text" name="reportingTo" id="reportingTo"
+                   formControlName="reportingTo">
+            <label class="label_OA">reportingTo</label>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+</div>

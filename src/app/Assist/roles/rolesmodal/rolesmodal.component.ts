@@ -1,24 +1,24 @@
 import {Component, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {BehaviorSubject, Subscription} from "rxjs";
-import {inits, leaverequest, sendLeaverequest} from "../../../AssistModel/leaverequest";
+import {inits,rolesrequest,sendrolesrequest} from "../../../AssistModel/rolesrequest";
 import {NgbActiveModal, NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
+import {Leavestep1Component} from "../../leave/leavemodal/steps/leavestep1/leavestep1.component";
 import {ActivatedRoute, Router} from "@angular/router";
-import {NotificationService} from "../../../AssistService/notification.service";
 import {HttpClient} from "@angular/common/http";
-import {Leavestep1Component} from "./steps/leavestep1/leavestep1.component";
+import {NotificationService} from "../../../AssistService/notification.service";
 import {assistService} from "../../../AssistService/assist.service";
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import {Rolesstep1Component} from "./steps/rolesstep1/rolesstep1.component";
 
 @Component({
-  selector: 'app-leavemodal',
-  templateUrl: './leavemodal.component.html',
-  styleUrls: ['./leavemodal.component.scss']
+  selector: 'app-rolesmodal',
+  templateUrl: './rolesmodal.component.html',
+  styleUrls: ['./rolesmodal.component.scss']
 })
-export class LeavemodalComponent implements OnInit {
+export class RolesmodalComponent implements OnInit {
+
   formsCount = 1;
   account$: BehaviorSubject < any >  =
-    new BehaviorSubject < leaverequest > (inits);
+    new BehaviorSubject < rolesrequest > (inits);
   currentStep$: BehaviorSubject < number >  = new BehaviorSubject(1);
   isCurrentFormValid$: BehaviorSubject < boolean >  = new BehaviorSubject < boolean > (
     false);
@@ -28,11 +28,11 @@ export class LeavemodalComponent implements OnInit {
   @Output()formValue: any
   fromParent: any;
   deleteModalDp: any;
-  sendLeaverequest: sendLeaverequest
+  sendrolesrequest: sendrolesrequest
   checkNextStage: boolean;
   closeResult: string;
   modalOption: NgbModalOptions = {};
-  @ViewChild(Leavestep1Component)leavestep1Component: Leavestep1Component;
+  @ViewChild(Rolesstep1Component)rolesstep1Component: Rolesstep1Component;
   @Output()displayedColumns: any
   @Output()fDisplayedColumns: any
   modal: any;
@@ -52,7 +52,7 @@ export class LeavemodalComponent implements OnInit {
     }
   }
 
-  updateAccount = (part: Partial < leaverequest > , isFormValid: boolean) => {
+  updateAccount = (part: Partial < rolesrequest > , isFormValid: boolean) => {
     const currentAccount = this.account$.value;
     const updatedAccount = {
       ...currentAccount,
@@ -70,24 +70,24 @@ export class LeavemodalComponent implements OnInit {
     }
     if (this.currentStep$.value === this.formsCount) {
       console.log(this.account$.value)
-      this.sendLeaverequest = new sendLeaverequest(this.account$.value);
+      this.sendrolesrequest = new sendrolesrequest(this.account$.value);
       if (this.mode === 'new') {
         this.checkNextStage = false;
-        const url = '/assist-leave/leaves';
-        const returnValue = this.aService.callMethod(url, 'new', this.sendLeaverequest, this.activeModal);
+        const url = '/assistadmin/roles';
+        const returnValue = this.aService.callMethod(url, 'new', this.sendrolesrequest, this.activeModal);
         if (returnValue === "success") {
           this.currentStep$.next(nextStep);
           this.activeModal.close();
         }
       } else if (this.mode === 'edit') {
         this.checkNextStage = false;
-        const url = '/assist-leave/leaves/'+this.id;
-        const returnValue = this.aService.callMethod(url, 'edit', this.sendLeaverequest, this.activeModal);
+        const url = '/assistadmin/roles/'+this.account$.value.roles_id;
+        const returnValue = this.aService.callMethod(url, 'edit', this.sendrolesrequest, this.activeModal);
         if (returnValue === "success") {
           this.currentStep$.next(nextStep);
           this.activeModal.close();
         }
-      } else {
+     } else {
         this.activeModal.close();
       }
     }

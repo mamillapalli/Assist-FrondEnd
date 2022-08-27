@@ -1,39 +1,4 @@
 interface leaverequest {
-  id: number;
-  name: string;
-  description: string;
-  startDate: Date;
-  endDate: Date;
-  numberOfDays: number;
-  payPercentage: number;
-  resourceId : string;
-  approverId : string;
-  contactAddress : string;
-  ticketsPaid : boolean;
-  ticketsTo : string;
-  approverComments: string;
-  transactionStatus: string;
-}
-const inits: leaverequest = {
-  id : 0,
-  name: '',
-  description: '',
-  startDate: new Date,
-  endDate: new Date,
-  numberOfDays: 0,
-  payPercentage: 0,
-  resourceId : '',
-  approverId : '',
-  contactAddress : '',
-  ticketsPaid : true,
-  ticketsTo : '',
-  approverComments: '',
-  transactionStatus: ''
-};
-export { leaverequest, inits };
-
-export class sendLeaverequest implements leaverequest {
-  id: number
   name: string;
   description: string;
   startDate: Date;
@@ -46,7 +11,36 @@ export class sendLeaverequest implements leaverequest {
   ticketsPaid : boolean
   ticketsTo : string
   approverComments: string
-  transactionStatus: string;
+}
+const inits: leaverequest = {
+  name: '',
+  description: '',
+  startDate: new Date,
+  endDate: new Date,
+  numberOfDays: 0,
+  payPercentage: 0,
+  resourceId : '',
+  approverId : '',
+  contactAddress : '',
+  ticketsPaid : true,
+  ticketsTo : '',
+  approverComments: ''
+};
+export { leaverequest, inits };
+
+export class sendLeaverequest implements leaverequest {
+  name: string;
+  description: string;
+  startDate: Date;
+  endDate: Date;
+  numberOfDays: number
+  payPercentage: number;
+  resourceId : string;
+  approverId : string;
+  contactAddress : string;
+  ticketsPaid : boolean
+  ticketsTo : string
+  approverComments: string
   constructor(d:any) {
     this.name = d.name;
     this.description = d.description;
@@ -63,6 +57,3 @@ export class sendLeaverequest implements leaverequest {
   }
 
 }
-
-
-

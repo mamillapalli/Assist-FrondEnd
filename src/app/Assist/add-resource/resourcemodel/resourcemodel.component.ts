@@ -1,24 +1,22 @@
 import {Component, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {BehaviorSubject, Subscription} from "rxjs";
-import {inits, leaverequest, sendLeaverequest} from "../../../AssistModel/leaverequest";
+import {inits, addresource,addResourcerequest} from "../../../AssistModel/addresource";
 import {NgbActiveModal, NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
+import {Resourcestep1Component} from "../../add-resource/resourcemodel/steps/resourcestep1/resourcestep1.component";
 import {ActivatedRoute, Router} from "@angular/router";
-import {NotificationService} from "../../../AssistService/notification.service";
 import {HttpClient} from "@angular/common/http";
-import {Leavestep1Component} from "./steps/leavestep1/leavestep1.component";
+import {NotificationService} from "../../../AssistService/notification.service";
 import {assistService} from "../../../AssistService/assist.service";
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
 
 @Component({
-  selector: 'app-leavemodal',
-  templateUrl: './leavemodal.component.html',
-  styleUrls: ['./leavemodal.component.scss']
+  selector: 'app-resourcemodel',
+  templateUrl: './resourcemodel.component.html',
+  styleUrls: ['./resourcemodel.component.scss']
 })
-export class LeavemodalComponent implements OnInit {
+export class ResourcemodelComponent implements OnInit {
   formsCount = 1;
   account$: BehaviorSubject < any >  =
-    new BehaviorSubject < leaverequest > (inits);
+    new BehaviorSubject < addresource > (inits);
   currentStep$: BehaviorSubject < number >  = new BehaviorSubject(1);
   isCurrentFormValid$: BehaviorSubject < boolean >  = new BehaviorSubject < boolean > (
     false);
@@ -28,15 +26,14 @@ export class LeavemodalComponent implements OnInit {
   @Output()formValue: any
   fromParent: any;
   deleteModalDp: any;
-  sendLeaverequest: sendLeaverequest
+  addResourcerequest: addResourcerequest
   checkNextStage: boolean;
   closeResult: string;
   modalOption: NgbModalOptions = {};
-  @ViewChild(Leavestep1Component)leavestep1Component: Leavestep1Component;
+  @ViewChild(Resourcestep1Component)Resourcestep1Component: Resourcestep1Component;
   @Output()displayedColumns: any
   @Output()fDisplayedColumns: any
   modal: any;
-  id:any;
 
 
   constructor(private router: Router,
@@ -52,7 +49,7 @@ export class LeavemodalComponent implements OnInit {
     }
   }
 
-  updateAccount = (part: Partial < leaverequest > , isFormValid: boolean) => {
+  updateAccount = (part: Partial < addresource > , isFormValid: boolean) => {
     const currentAccount = this.account$.value;
     const updatedAccount = {
       ...currentAccount,
@@ -70,19 +67,19 @@ export class LeavemodalComponent implements OnInit {
     }
     if (this.currentStep$.value === this.formsCount) {
       console.log(this.account$.value)
-      this.sendLeaverequest = new sendLeaverequest(this.account$.value);
+      this.addResourcerequest = new addResourcerequest(this.account$.value);
       if (this.mode === 'new') {
         this.checkNextStage = false;
-        const url = '/assist-leave/leaves';
-        const returnValue = this.aService.callMethod(url, 'new', this.sendLeaverequest, this.activeModal);
+        const url = 'assistadmin/resources';
+        const returnValue = this.aService.callMethod(url, 'new', this.addResourcerequest, this.activeModal);
         if (returnValue === "success") {
           this.currentStep$.next(nextStep);
           this.activeModal.close();
         }
       } else if (this.mode === 'edit') {
         this.checkNextStage = false;
-        const url = '/assist-leave/leaves/'+this.id;
-        const returnValue = this.aService.callMethod(url, 'edit', this.sendLeaverequest, this.activeModal);
+        const url = 'assistadmin/resources';
+        const returnValue = this.aService.callMethod(url, 'edit', this.addResourcerequest, this.activeModal);
         if (returnValue === "success") {
           this.currentStep$.next(nextStep);
           this.activeModal.close();
@@ -108,5 +105,4 @@ export class LeavemodalComponent implements OnInit {
   closeModal() {
     this.activeModal.dismiss();
   }
-
 }
