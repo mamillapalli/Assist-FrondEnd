@@ -8,6 +8,7 @@ interface addresource {
   emailAddress : string;
   reportingTo : string;
   roles : string;
+  report : [addresource];
 }
 
 const inits: addresource = {
@@ -18,7 +19,8 @@ const inits: addresource = {
   status : '',
   emailAddress : '',
   reportingTo : '',
-  roles : ''
+  roles : '',
+  report: [{} as addresource]
 };
 export { addresource, inits };
 
@@ -31,6 +33,7 @@ export class addResourcerequest implements addresource {
   reportingTo: string;
   status: string;
   roles: string;
+  report : [addresource];
   constructor(d:any) {
     this.firstName = d.firstName;
     this.lastName = d.lastName;

@@ -73,6 +73,7 @@ import { Rolesstep1Component } from './Assist/roles/rolesmodal/steps/rolesstep1/
 import {AddResourceComponent} from "./Assist/add-resource/add-resource.component";
 import {Resourcestep1Component} from "./Assist/add-resource/resourcemodel/steps/resourcestep1/resourcestep1.component";
 import {ResourcemodelComponent} from "./Assist/add-resource/resourcemodel/resourcemodel.component";
+import { ExternalResourceToComponentComponent } from './Assist/ExternalModal/external-resource-to-component/external-resource-to-component.component';
 
 
 function appInitializer(authService: AuthService) {
@@ -98,7 +99,8 @@ function appInitializer(authService: AuthService) {
     Rolesstep1Component,
     AddResourceComponent,
     Resourcestep1Component,
-    ResourcemodelComponent
+    ResourcemodelComponent,
+    ExternalResourceToComponentComponent
   ],
   imports: [
     BrowserModule,

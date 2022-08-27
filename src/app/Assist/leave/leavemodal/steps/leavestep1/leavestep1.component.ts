@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Subscription} from "rxjs";
 import {leaverequest} from "../../../../../AssistModel/leaverequest";
 import {assistService} from "../../../../../AssistService/assist.service";
+import {AuthService, UserModel} from "../../../../../modules/auth";
 
 @Component({
   selector: 'app-leavestep1',
@@ -18,8 +19,11 @@ export class Leavestep1Component implements OnInit {
   @Input() mode: any;
   @Input('formValue') formValue :  any;
   ReadOnlyCheckBox: boolean;
+  userModal: any;
 
-  constructor(private fb: FormBuilder,public aService: assistService) {}
+  constructor(private fb: FormBuilder,public aService: assistService,public authService: AuthService) {
+    console.log(localStorage.getItem("userModal"))
+  }
 
   ngOnInit() {
     this.initForm();
@@ -31,6 +35,11 @@ export class Leavestep1Component implements OnInit {
         this.leaveRequestForm.disable()
         this.ReadOnlyCheckBox = true;
       }
+    } else {
+        //this.f.emailAddress.setValue(this.userModal.emailAddress);
+        //this.leaveRequestForm.patchValue(this.userModal)
+      this.f.name.setValue(this.userModal.firstName+" "+ this.userModal.lastName)
+
     }
     this.updateParentModel({}, this.checkForm());
   }

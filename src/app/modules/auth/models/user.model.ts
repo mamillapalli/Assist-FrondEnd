@@ -3,6 +3,9 @@ import { AddressModel } from './address.model';
 import { SocialNetworksModel } from './social-networks.model';
 
 export class UserModel extends AuthModel {
+  emailAddres:string;
+  firstName : string;
+  lastNme : string;
   id: number;
   username: string;
   password: string;

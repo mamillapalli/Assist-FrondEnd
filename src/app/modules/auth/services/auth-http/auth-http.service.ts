@@ -12,6 +12,7 @@ const API_USERS_URL = `${environment.apiUrl}/auth`;
 })
 export class AuthHTTPService {
   constructor(private http: HttpClient) {}
+  UserModel : UserModel;
 
   // public methods
   login(emailAddress: string, password: string): Observable<any> {
@@ -37,8 +38,10 @@ export class AuthHTTPService {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-    return this.http.get<UserModel>(`/assistadmin/profile`, {
+    const result:any = this.http.get<UserModel>(`/assistadmin/profile`, {
       headers: httpHeaders,
     });
+    localStorage.setItem('userModal', JSON.stringify(result));
+    return result;
   }
 }

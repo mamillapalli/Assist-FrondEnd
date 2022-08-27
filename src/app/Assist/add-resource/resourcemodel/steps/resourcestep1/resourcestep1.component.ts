@@ -3,6 +3,8 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Subscription} from "rxjs";
 import {assistService} from "../../../../../AssistService/assist.service";
 import {addresource} from "../../../../../AssistModel/addresource";
+import {NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
+import {ExternalResourceToComponentComponent} from "../../../../ExternalModal/external-resource-to-component/external-resource-to-component.component";
 
 
 @Component({
@@ -21,19 +23,37 @@ export  class Resourcestep1Component implements OnInit {
   @Input() mode: any;
   @Input('formValue') formValue :  any;
   ReadOnlyCheckBox: boolean;
+  dropdownList = [];
+  selectedItems = [];
+  dropdownSettings = {};
+  modalOption: NgbModalOptions = {};
 
-  constructor(private fb: FormBuilder,public aService: assistService) {}
+  constructor(private fb: FormBuilder,public aService: assistService,public modalService: NgbModal) {}
 
   ngOnInit() {
     this.initForm();
     if(this.mode !== 'new')
     {
       this.updateForm();
-      if(this.mode === 'auth' || this.mode === 'delete' || this.mode === 'view')
-      {
+      if(this.mode === 'auth' || this.mode === 'delete' || this.mode === 'view') {
         this.addResourceForm.disable()
         this.ReadOnlyCheckBox = true;
       }
+    } else {
+      this.getData();
+      this.dropdownSettings = {
+        singleSelection: false,
+        text: "Select Roles",
+        selectAllText: 'Select All',
+        unSelectAllText: 'UnSelect All',
+        enableSearchFilter: true,
+        classes: "myclass custom-class",
+        autoPosition: true,
+        badgeShowLimit: 3,
+        lazyLoading: true,
+        showCheckbox: true,
+        maxHeight: 120
+      };
     }
     this.updateParentModel({}, this.checkForm());
   }
@@ -56,7 +76,8 @@ export  class Resourcestep1Component implements OnInit {
       emailAddress: [this.defaultValues.emailAddress, [Validators.required]],
       roles: [this.defaultValues.roles, [Validators.required]],
       reportingTo: [this.defaultValues.reportingTo, [Validators.required]],
-      status: [this.defaultValues.status, [Validators.required]]
+      status: [this.defaultValues.status, [Validators.required]],
+      report: [this.defaultValues.report,[Validators.required]],
 
     });
 
@@ -99,6 +120,49 @@ export  class Resourcestep1Component implements OnInit {
       this.addResourceForm.get('ticketsTo')?.hasError('required')
 
     );
+  }
+
+  getData(): void {
+    let tmp: any = [];
+    const sb = this.aService.getMethod('/assistadmin/roles', '',).subscribe((res) => {
+      console.log('response is '+res)
+      for(let i=0; i < res.length; i++) {
+        tmp.push({ id: i ,  itemName: res[i].name, name: res[i].name });
+      }
+      this.dropdownList = tmp;
+    });
+  }
+
+  onItemSelect(item:any) {
+    console.log(item);
+  }
+
+  OnItemDeSelect(item:any) {
+    console.log(item);
+  }
+
+  onSelectAll(items:any) {
+    console.log(items);
+  }
+
+  onDeSelectAll(items:any) {
+    console.log(items);
+  }
+
+  openResourceDialog() {
+    this.modalOption.backdrop = 'static';
+    this.modalOption.keyboard = false;
+    this.modalOption.size='lg';
+    const modalRef = this.modalService.open(ExternalResourceToComponentComponent, this.modalOption);
+    modalRef.result.then((result) => {
+      if (result) {
+        console.log("row result is " + result)
+        this.f.reportingTo.setValue(result.emailAddress);
+        this.f.report.setValue(result);
+      }
+    }, (reason) => {
+      console.log('reason is' + reason);
+    });
   }
 
 }
