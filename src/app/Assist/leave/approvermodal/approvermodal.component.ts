@@ -11,8 +11,10 @@ import {filterFunction} from "../../../AssistModel/filterFunction";
 import {AuthService} from "../../../modules/auth";
 import {NotificationService} from "../../../AssistService/notification.service";
 import {assistService} from "../../../AssistService/assist.service";
-import {CdkDragDrop} from "@angular/cdk/drag-drop";
+import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
 import {InapprovermodalComponent} from "./inapprovermodal/inapprovermodal.component";
+import {FilterComponentComponent} from "../../ExternalModal/filter-component/filter-component.component";
+import {commonService} from "../../../AssistService/common.service";
 
 @Component({
   selector: 'app-approvermodal',
@@ -26,8 +28,6 @@ export class ApprovermodalComponent implements OnInit {
   modalOption: NgbModalOptions = {};
   private subscriptions: Subscription[] = [];
   authRoles: any;
-
-
   //SORTING
   totalRows = 0;
   pageSize = 5;
@@ -36,7 +36,6 @@ export class ApprovermodalComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator | any;
   @ViewChild(MatSort) sort: MatSort | any;
   sortData: any
-
   //filter
   public columnShowHideList: CustomColumn[] = []
   color = 'accent';
@@ -49,12 +48,12 @@ export class ApprovermodalComponent implements OnInit {
   columns: { columnDef: string; header: string; }[];
   closeResult: any ;
   modalHeader: any;
-
   constructor(public authService: AuthService,
               public modalService: NgbModal,
               public notifyService: NotificationService,
               public aService: assistService,
-              public activeModal: NgbActiveModal) {
+              public activeModal: NgbActiveModal,
+              public commonService: commonService) {
     const auth = this.authService.getAuthFromLocalStorage();
     this.authRoles = auth?.roles;
   }
@@ -70,7 +69,7 @@ export class ApprovermodalComponent implements OnInit {
     ]
     this.aService.initializeColumnProperties(this.displayedColumns,this.columnShowHideList);
     this.getLeaveByApprover();
-
+    this.dataSource.filterPredicate = this.commonService.createFilter();
   }
 
   ngAfterViewInit() {
@@ -87,43 +86,10 @@ export class ApprovermodalComponent implements OnInit {
     this.subscriptions.push(sb);
   }
 
-  openFilter() {
-
-  }
-
-  drop(event: CdkDragDrop<string[]>) {
-  }
-
-  pageChanged(event: any) {
-    this.pageSize = event.pageSize;
-    this.currentPage = event.pageIndex;
-    this.getLeaveByApprover();
-  }
-
-  sortChanges(event: Sort) {
-    this.sortData = event.active+','+event.direction
-    this.getLeaveByApprover();
-  }
-
-  public applyFilter(event: any,label:any) {
-  }
-
-  clearColumn(event:any,columnKey: string): void {
-    this.searchValue[columnKey] = null;
-    this.searchCondition[columnKey] = "none";
-    this.applyFilter(null,null);
-    this.getLeaveByApprover();
-  }
-
   openCorporatesDialog(element: any, view: string) {
   }
 
   openDeleteCustomer(element: any, view: string){
-  }
-
-
-  toggleColumn(column:any) {
-
   }
 
   openDialog(element: any, mode: any) {
@@ -180,5 +146,77 @@ export class ApprovermodalComponent implements OnInit {
 
   close(){
     this.activeModal.dismiss();
+  }
+
+  openFilter() {
+    console.log('open filter')
+    this.modalOption.backdrop = 'static';
+    this.modalOption.keyboard = false;
+    this.modalOption.size = 'lg';
+    const modalRef = this.modalService.open(FilterComponentComponent, this.modalOption);
+    console.log(this.fDisplayedColumns)
+    modalRef.componentInstance.fDisplayedColumns = this.fDisplayedColumns;
+    modalRef.result.then((result) => {
+      console.log(result);
+      if (result.valid && result.value.filterOption.length > 0) {
+        const f = result.value.filterOption
+        for (let i = 0; i < f.length; i++) {
+          let filterValues: any = {};
+          filterValues[f[i].filterId] = f[i].filterValue
+          this.dataSource.filter = JSON.stringify(filterValues);
+        }
+      } else if (result == 'reset') {
+        this.dataSource.filter = "";
+      } else {
+        console.log('No Records')
+      }
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
+  applyFilter(event: any, label: any) {
+    this.dataSource.filter = '';
+    this.searchFilter = {
+      values: this.searchValue,
+      conditions: this.searchCondition,
+      methods: this._filterMethods,
+      label: label,
+    };
+    this.commonService.applyFilter(this.searchFilter, this.dataSource)
+  }
+
+  clearColumn(event: any, columnKey: string): void {
+    this.searchValue[columnKey] = null;
+    this.searchCondition[columnKey] = "none";
+    this.commonService.clearColumn(columnKey, this.dataSource)
+  }
+
+  toggleColumn(column: any) {
+    if (column.isActive && column.name !== 'columnSetting') {
+      if (column.possition > this.displayedColumns.length - 1) {
+        this.displayedColumns.push(column.name);
+      } else {
+        this.displayedColumns.splice(column.possition, 0, column.name);
+      }
+    } else {
+      let i = this.displayedColumns.indexOf(column.name);
+      let opr = i > -1 ? this.displayedColumns.splice(i, 1) : undefined;
+    }
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.displayedColumns, event.previousIndex, event.currentIndex);
+  }
+
+  pageChanged(event: any) {
+    this.pageSize = event.pageSize;
+    this.currentPage = event.pageIndex;
+    this.getLeaveByApprover();
+  }
+
+  sortChanges(event: Sort) {
+    this.sortData = event.active + ',' + event.direction
+    this.getLeaveByApprover();
   }
 }

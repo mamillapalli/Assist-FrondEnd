@@ -74,6 +74,7 @@ import {AddResourceComponent} from "./Assist/add-resource/add-resource.component
 import {Resourcestep1Component} from "./Assist/add-resource/resourcemodel/steps/resourcestep1/resourcestep1.component";
 import {ResourcemodelComponent} from "./Assist/add-resource/resourcemodel/resourcemodel.component";
 import { ExternalResourceToComponentComponent } from './Assist/ExternalModal/external-resource-to-component/external-resource-to-component.component';
+import { FilterComponentComponent } from './Assist/ExternalModal/filter-component/filter-component.component';
 
 
 function appInitializer(authService: AuthService) {
@@ -100,7 +101,8 @@ function appInitializer(authService: AuthService) {
     AddResourceComponent,
     Resourcestep1Component,
     ResourcemodelComponent,
-    ExternalResourceToComponentComponent
+    ExternalResourceToComponentComponent,
+    FilterComponentComponent
   ],
   imports: [
     BrowserModule,
