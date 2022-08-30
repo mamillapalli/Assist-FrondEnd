@@ -6,32 +6,33 @@
     <div class="container mt-5 ">
       <div class="form-group row">
         <div class="col-3">
-          <div class="floating-label_mandatory">
-            <input class="floating-input_mandatory" type="text" name="resourceId" id="resourceId"
+          <div class="floating-label_readonly">
+            <input class="floating-input_readonly" type="text" name="resourceId" id="resourceId"
                    formControlName="resourceId"
                    [class.is-invalid]="isControlInvalid('resourceId')"
                    [class.is-valid]="isControlValid('resourceId')"
+                   readonly
             >
-            <label class="label_OA required">Resource Id</label>
+            <label class="label_OA_readonly">Resource Id</label>
           </div>
         </div>
+<!--        <div class="col-3">-->
+<!--          <div class="floating-label_readonly">-->
+<!--            <input type="text" class="floating-input_readonly" autocomplete="off"-->
+<!--                   name="approverId"-->
+<!--                   formControlName="approverId"-->
+<!--                   [class.is-invalid]="isControlInvalid('approverId')"-->
+<!--                   [class.is-valid]="isControlValid('approverId')"-->
+<!--            />-->
+<!--            <label class="label_OA_readonly">Approver Id </label>-->
+<!--          </div>-->
+<!--        </div>-->
         <div class="col-3">
-          <div class="floating-label_mandatory">
-            <input type="text" class="floating-input_mandatory" autocomplete="off"
-                   name="approverId"
-                   formControlName="approverId"
-                   [class.is-invalid]="isControlInvalid('approverId')"
-                   [class.is-valid]="isControlValid('approverId')"
-            />
-            <label class="label_OA_mandatory">Approver Id </label>
-          </div>
-        </div>
-        <div class="col-3">
-          <div class="floating-label_mandatory">
-            <input type="name" class="floating-input_mandatory" autocomplete="off"
+          <div class="floating-label_readonly">
+            <input type="name" class="floating-input_readonly" autocomplete="off"
                    name="name"
-                   formControlName="name"/>
-            <label class="label_OA_mandatory">Name</label>
+                   formControlName="name" readonly/>
+            <label class="label_OA_readonly">Name</label>
           </div>
         </div>
         <div class="col-3">
@@ -43,15 +44,29 @@
             <label class="label_OA">Description</label>
           </div>
         </div>
+        <div class="col-3">
+          <div class="floating-label">
+            <input class="floating-input_mandatory" type="text" name="contactAddress" id="contactAddress"
+                   formControlName="contactAddress"
+                   [class.is-invalid]="isControlInvalid('approverId')"
+                   [class.is-valid]="isControlValid('approverId')"
+            >
+            <label class="label_OA_mandatory">Contact Address</label>
+          </div>
+        </div>
       </div>
     </div>
     <div class="container mt-5 ">
       <div class="form-group row">
         <div class="col-3">
           <div class="floating-label">
-            <input class="floating-input" type="text" name="contactAddress" id="contactAddress"
-                   formControlName="contactAddress">
-            <label class="label_OA">Contact Address</label>
+            <input class="floating-input_mandatory" type="text" name="contactAddress" id="contactPhone"
+                   formControlName="contactPhone"
+                   [class.is-invalid]="isControlInvalid('approverId')"
+                   [class.is-valid]="isControlValid('approverId')"
+            >
+            <label class="label_OA_mandatory">Contact Phone</label>
+
           </div>
         </div>
         <div class="col-3">

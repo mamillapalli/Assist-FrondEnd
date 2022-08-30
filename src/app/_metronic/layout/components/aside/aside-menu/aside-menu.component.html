@@ -15,24 +15,24 @@
 </div>
 
 <!-- Layout builder -->
-<div class="menu-item">
-  <a
-    class="menu-link without-sub"
-    routerLink="/builder"
-    routerLinkActive="active"
-    ><span class="menu-icon">
-      <span
-        [inlineSVG]="'./assets/media/icons/duotune/general/gen019.svg'"
-        class="svg-icon svg-icon-2"
-      ></span> </span
-    ><span class="menu-title">Layout Builder</span></a
-  >
-</div>
+<!--<div class="menu-item">-->
+<!--  <a-->
+<!--    class="menu-link without-sub"-->
+<!--    routerLink="/builder"-->
+<!--    routerLinkActive="active"-->
+<!--    ><span class="menu-icon">-->
+<!--      <span-->
+<!--        [inlineSVG]="'./assets/media/icons/duotune/general/gen019.svg'"-->
+<!--        class="svg-icon svg-icon-2"-->
+<!--      ></span> </span-->
+<!--    ><span class="menu-title">Layout Builder</span></a-->
+<!--  >-->
+<!--</div>-->
 <!-- Separator -->
 <div class="menu-item">
   <div class="menu-content pt-8 pb-2">
     <span class="menu-section text-muted text-uppercase fs-8 ls-1"
-      >Crafted</span
+      >Admin</span
     >
   </div>
 </div>
@@ -67,8 +67,13 @@
     ></a>
 </div>
 
+<div class="menu-item" *ngIf="authRoles.includes('LEAVE_ADMIN') || authRoles.includes('LEAVE_APPROVER')" >
+  <div class="menu-content pt-8 pb-2">
+    <span class="menu-section text-muted text-uppercase fs-8 ls-1">Employee</span>
+  </div>
+</div>
 
-<div class="menu-item">
+<div class="menu-item" *ngIf="authRoles.includes('LEAVE_ADMIN') || authRoles.includes('LEAVE_APPROVER')">
   <a
     class="menu-link without-sub"
     routerLink="/leave"

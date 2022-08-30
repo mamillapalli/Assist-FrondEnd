@@ -78,7 +78,7 @@ export class ApprovermodalComponent implements OnInit {
   }
 
   public getLeaveByApprover() {
-    const sb = this.aService.getMethod('/assist-leave/leavesByApproverId/77777/WAITING', '',).subscribe((res) => {
+    const sb = this.aService.getMethod('/assist-leave/leavesstatus/PENDING', '',).subscribe((res) => {
       this.dataSource.data = res;
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;

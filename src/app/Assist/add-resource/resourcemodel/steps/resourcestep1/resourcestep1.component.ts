@@ -23,37 +23,38 @@ export  class Resourcestep1Component implements OnInit {
   @Input() mode: any;
   @Input('formValue') formValue :  any;
   ReadOnlyCheckBox: boolean;
-  dropdownList = [];
-  selectedItems = [];
-  dropdownSettings = {};
+  dropdownList:any = [];
+  dropdownSettings = {
+    singleSelection: false,
+    text: "Select Roles",
+    selectAllText: 'Select All',
+    unSelectAllText: 'UnSelect All',
+    enableSearchFilter: true,
+    classes: "myclass custom-class",
+    autoPosition: true,
+    badgeShowLimit: 3,
+    lazyLoading: true,
+    showCheckbox: true,
+    maxHeight: 120
+  };
+  selectedItems: any = [];
   modalOption: NgbModalOptions = {};
 
   constructor(private fb: FormBuilder,public aService: assistService,public modalService: NgbModal) {}
 
   ngOnInit() {
     this.initForm();
+
     if(this.mode !== 'new')
     {
+      this.getRolesData();
       this.updateForm();
       if(this.mode === 'auth' || this.mode === 'delete' || this.mode === 'view') {
         this.addResourceForm.disable()
         this.ReadOnlyCheckBox = true;
       }
     } else {
-      this.getData();
-      this.dropdownSettings = {
-        singleSelection: false,
-        text: "Select Roles",
-        selectAllText: 'Select All',
-        unSelectAllText: 'UnSelect All',
-        enableSearchFilter: true,
-        classes: "myclass custom-class",
-        autoPosition: true,
-        badgeShowLimit: 3,
-        lazyLoading: true,
-        showCheckbox: true,
-        maxHeight: 120
-      };
+      this.getRolesData();
     }
     this.updateParentModel({}, this.checkForm());
   }
@@ -65,6 +66,18 @@ export  class Resourcestep1Component implements OnInit {
   updateForm()
   {
     this.addResourceForm.patchValue(this.formValue)
+    let va = this.formValue.roles
+    console.log('va'+va[0].name)
+    console.log('va'+va.length)
+    for (let i = 0; i < va.length; i++) {
+      var tempObj = {"id": 0, "itemName": "", "name": ""};
+      tempObj.id = i;
+      tempObj.itemName = va[i].name;
+      tempObj.name = va[i].name;
+      console.log(tempObj)
+      this.selectedItems.push(tempObj);
+      this.dropdownList.push(tempObj);
+    }
   }
 
   initForm() {
@@ -122,7 +135,7 @@ export  class Resourcestep1Component implements OnInit {
     );
   }
 
-  getData(): void {
+  getRolesData(): void {
     let tmp: any = [];
     const sb = this.aService.getMethod('/assistadmin/roles', '',).subscribe((res) => {
       console.log('response is '+res)

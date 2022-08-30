@@ -47,6 +47,7 @@ export class Rolesstep1Component implements OnInit {
   initForm() {
     this.rolesRequestForm = this.fb.group({
       name: [this.defaultValues.name, [Validators.required]],
+      desc: [this.defaultValues.desc, [Validators.required]],
     });
 
     const formChangesSubscr = this.rolesRequestForm.valueChanges.subscribe((val) => {

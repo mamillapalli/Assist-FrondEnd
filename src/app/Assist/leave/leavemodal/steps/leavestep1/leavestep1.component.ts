@@ -1,9 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Subscription} from "rxjs";
+import {Observable, Subscription, take} from "rxjs";
 import {leaverequest} from "../../../../../AssistModel/leaverequest";
 import {assistService} from "../../../../../AssistService/assist.service";
-import {AuthService, UserModel} from "../../../../../modules/auth";
+import {AuthService, UserModel, UserType} from "../../../../../modules/auth";
 
 @Component({
   selector: 'app-leavestep1',
@@ -21,8 +21,9 @@ export class Leavestep1Component implements OnInit {
   ReadOnlyCheckBox: boolean;
   userModal: any;
 
+
   constructor(private fb: FormBuilder,public aService: assistService,public authService: AuthService) {
-    console.log(localStorage.getItem("userModal"))
+    const sub = this.authService.currentUser$.pipe(take(1)).subscribe(value => this.userModal = value);
   }
 
   ngOnInit() {
@@ -36,10 +37,10 @@ export class Leavestep1Component implements OnInit {
         this.ReadOnlyCheckBox = true;
       }
     } else {
-        //this.f.emailAddress.setValue(this.userModal.emailAddress);
-        //this.leaveRequestForm.patchValue(this.userModal)
-      this.f.name.setValue(this.userModal.firstName+" "+ this.userModal.lastName)
-
+        this.leaveRequestForm.patchValue(this.userModal)
+        this.f.resourceId.setValue(this.userModal.emailAddress);
+        this.f.approverId.setValue(this.userModal.approverId);
+        this.f.name.setValue(this.userModal.firstName+" "+ this.userModal.lastName)
     }
     this.updateParentModel({}, this.checkForm());
   }
@@ -64,6 +65,7 @@ export class Leavestep1Component implements OnInit {
       resourceId: [this.defaultValues.resourceId, [Validators.required]],
       approverId: [this.defaultValues.approverId, [Validators.required]],
       contactAddress: [this.defaultValues.contactAddress, [Validators.required]],
+      contactPhone: [this.defaultValues.contactPhone, [Validators.required]],
       ticketsPaid: [this.defaultValues.ticketsPaid, [Validators.required]],
       ticketsTo: [this.defaultValues.ticketsTo, [Validators.required]],
     });

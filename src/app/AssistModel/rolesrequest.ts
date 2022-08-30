@@ -1,6 +1,7 @@
 interface rolesrequest {
   roles_id : string;
   name: string;
+  desc: string;
   createdUser : string;
   createdDate : string;
   transactionStatus : string
@@ -8,6 +9,7 @@ interface rolesrequest {
 const inits: rolesrequest = {
   roles_id : '',
   name: '',
+  desc: '',
   createdUser : '',
   createdDate : '',
   transactionStatus : ''
@@ -17,6 +19,7 @@ export { rolesrequest, inits };
 
 export class sendrolesrequest implements rolesrequest {
   name: string;
+  desc: string;
   createdDate: string;
   createdUser: string;
   roles_id: string;
@@ -24,9 +27,6 @@ export class sendrolesrequest implements rolesrequest {
   constructor(d:any) {
     this.name = d.name;
   }
-
-
-
 }
 
 

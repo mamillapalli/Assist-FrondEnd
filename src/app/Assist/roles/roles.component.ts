@@ -26,8 +26,8 @@ import {commonService} from "../../AssistService/common.service";
 export class RolesComponent implements OnInit {
 
   dataSource: any = new MatTableDataSource<rolesrequest>();
-  @Output() displayedColumns: string[] = ['columnSetting', 'role_id', 'name', 'createdDate', 'createdUser', 'transactionStatus', 'actions'];
-  @Output() fDisplayedColumns: string[] = ['role_id', 'name', 'createdDate', 'createdUser', 'transactionStatus'];
+  @Output() displayedColumns: string[] = ['columnSetting', 'name', 'desc','actions'];
+  @Output() fDisplayedColumns: string[] = ['name', 'desc', 'transactionStatus'];
   modalOption: NgbModalOptions = {};
   private subscriptions: Subscription[] = [];
   authRoles: any;
@@ -65,11 +65,12 @@ export class RolesComponent implements OnInit {
 
   ngOnInit(): void {
     this.columns = [
-      {columnDef: 'role_id', header: 'Role Id'},
-      {columnDef: 'name', header: 'Name'},
-      {columnDef: 'createdDate', header: 'Created Date'},
-      {columnDef: 'createdUser', header: 'Created User'},
-      {columnDef: 'transactionStatus', header: 'Transaction Status'}
+      //{columnDef: 'role_id', header: 'Role Id'},
+      {columnDef: 'name', header: 'Role Name'},
+      {columnDef: 'desc', header: 'Role Description'},
+      //{columnDef: 'createdDate', header: 'Created Date'},
+      //{columnDef: 'createdUser', header: 'Created User'},
+      //{columnDef: 'transactionStatus', header: 'Transaction Status'}
     ]
     this.aService.initializeColumnProperties(this.displayedColumns, this.columnShowHideList);
     this.getLeave();

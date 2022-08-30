@@ -34,14 +34,25 @@ export class AuthHTTPService {
     });
   }
 
+  // getUserByToken(token: string): Observable<UserModel> {
+  //   const httpHeaders = new HttpHeaders({
+  //     Authorization: `Bearer ${token}`,
+  //   });
+  //   const result:any = this.http.get<UserModel>(`/assistadmin/profile`, {
+  //     headers: httpHeaders,
+  //   });
+  //   localStorage.setItem('userModal', JSON.stringify(result));
+  //   return result;
+  // }
+
   getUserByToken(token: string): Observable<UserModel> {
     const httpHeaders = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-    const result:any = this.http.get<UserModel>(`/assistadmin/profile`, {
+    //return this.http.get<UserModel>(`${API_USERS_URL}/api/v1/myprofile`, {
+    return this.http.get<UserModel>(`/assistadmin/profile`, {
       headers: httpHeaders,
     });
-    localStorage.setItem('userModal', JSON.stringify(result));
-    return result;
   }
 }
+

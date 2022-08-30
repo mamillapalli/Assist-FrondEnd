@@ -8,6 +8,7 @@ interface leaverequest {
   resourceId : string;
   approverId : string;
   contactAddress : string;
+  contactPhone : string;
   ticketsPaid : boolean
   ticketsTo : string
   approverComments: string
@@ -22,6 +23,7 @@ const inits: leaverequest = {
   resourceId : '',
   approverId : '',
   contactAddress : '',
+  contactPhone : '',
   ticketsPaid : true,
   ticketsTo : '',
   approverComments: ''
@@ -38,6 +40,7 @@ export class sendLeaverequest implements leaverequest {
   resourceId : string;
   approverId : string;
   contactAddress : string;
+  contactPhone : string;
   ticketsPaid : boolean
   ticketsTo : string
   approverComments: string
@@ -51,6 +54,7 @@ export class sendLeaverequest implements leaverequest {
     this.resourceId = d.resourceId;
     this.approverId = d.approverId;
     this.contactAddress = d.contactAddress;
+    this.contactPhone = d.contactPhone;
     this.ticketsPaid = d.ticketsPaid;
     this.ticketsTo = d.ticketsTo;
     this.approverComments = d.approverComments;

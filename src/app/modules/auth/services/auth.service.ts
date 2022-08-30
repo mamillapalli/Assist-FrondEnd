@@ -81,6 +81,7 @@ export class AuthService implements OnDestroy {
       map((user: UserType) => {
         if (user) {
           this.currentUserSubject.next(user);
+
         } else {
           this.logout();
         }
@@ -118,6 +119,8 @@ export class AuthService implements OnDestroy {
     // store auth authToken/refreshToken/epiresIn in local storage to keep user logged in between page refreshes
     if (auth && auth.jwt) {
       let decodeToken = helper.decodeToken(auth.jwt);
+      auth.roles = decodeToken.roles;
+      auth.expiresIn = decodeToken.expiresIn;
       localStorage.setItem(this.authLocalStorageToken, JSON.stringify(auth));
       return true;
     }

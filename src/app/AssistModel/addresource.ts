@@ -1,13 +1,14 @@
+import {rolesrequest, sendrolesrequest} from "./rolesrequest";
 
 interface addresource {
   firstName: string;
   lastName: string;
   birthDate: Date;
   joiningDate: Date;
-  status: string;
+  status: boolean;
   emailAddress : string;
   reportingTo : string;
-  roles : string;
+  roles : [sendrolesrequest];
   report : [addresource];
 }
 
@@ -16,10 +17,10 @@ const inits: addresource = {
   lastName: '',
   birthDate: new Date,
   joiningDate: new Date,
-  status : '',
+  status : true,
   emailAddress : '',
   reportingTo : '',
-  roles : '',
+  roles : [{} as rolesrequest],
   report: [{} as addresource]
 };
 export { addresource, inits };
@@ -31,8 +32,8 @@ export class addResourcerequest implements addresource {
   joiningDate: Date;
   emailAddress: string;
   reportingTo: string;
-  status: string;
-  roles: string;
+  status: boolean;
+  roles: [sendrolesrequest];
   report : [addresource];
   constructor(d:any) {
     this.firstName = d.firstName;
@@ -42,7 +43,7 @@ export class addResourcerequest implements addresource {
     this.emailAddress = d.emailAddress;
     this.reportingTo = d.reportingTo;
     this.status = d.status;
-    roles: d.roles;
+    this.roles = d.roles;
   }
 
 }
