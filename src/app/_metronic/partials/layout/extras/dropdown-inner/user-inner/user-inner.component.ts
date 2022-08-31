@@ -2,6 +2,7 @@ import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { TranslationService } from '../../../../../../modules/i18n';
 import { AuthService, UserType } from '../../../../../../modules/auth';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-user-inner',
@@ -19,7 +20,8 @@ export class UserInnerComponent implements OnInit, OnDestroy {
 
   constructor(
     private auth: AuthService,
-    private translationService: TranslationService
+    private translationService: TranslationService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -27,8 +29,11 @@ export class UserInnerComponent implements OnInit, OnDestroy {
     this.setLanguage(this.translationService.getSelectedLanguage());
   }
 
-  logout() {
+  logout() {console.log('logout')
     this.auth.logout();
+    this.router.navigate(['/'], {
+      queryParams: {},
+    });
     document.location.reload();
   }
 
