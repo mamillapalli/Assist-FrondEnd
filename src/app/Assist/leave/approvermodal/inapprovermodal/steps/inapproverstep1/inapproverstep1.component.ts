@@ -18,6 +18,7 @@ export class Inapproverstep1Component implements OnInit {
   @Input() mode: any;
   @Input('formValue') formValue :  any;
   ReadOnlyCheckBox: boolean;
+  userModal: any;
 
   constructor(private fb: FormBuilder,public aService: assistService) {}
 
@@ -32,6 +33,11 @@ export class Inapproverstep1Component implements OnInit {
         this.f.approverComments.enable();
         this.ReadOnlyCheckBox = true;
       }
+    } else {
+      this.leaveRequestForm.patchValue(this.userModal)
+      this.f.resourceId.setValue(this.userModal.emailAddress);
+      this.f.approverId.setValue(this.userModal.approverId);
+      this.f.name.setValue(this.userModal.firstName+" "+ this.userModal.lastName)
     }
     this.updateParentModel({}, this.checkForm());
   }
@@ -101,6 +107,17 @@ export class Inapproverstep1Component implements OnInit {
       this.leaveRequestForm.get('approverComments')?.hasError('required')
 
     );
+  }
+
+  calNumberOfDays() {
+    console.log("start Date is :" + this.f.startDate.value);
+    console.log("end Date is :" + this.f.endDate.value);
+    const dateone = new Date(this.f.startDate.value);
+    const datetwo = new Date(this.f.endDate.value);
+    const oneDay = 1000 * 60 * 60 * 24;
+    const diffInTime = datetwo.getTime() - dateone.getTime();
+    const diffInDays = Math.round(diffInTime / oneDay);
+    this.f.numberOfDays.setValue(diffInDays);
   }
 
 }

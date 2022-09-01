@@ -75,7 +75,7 @@ export class InapprovermodalComponent implements OnInit {
         this.checkNextStage = false;
         console.log(this.id)
         const url = '/assist-leave/approveleaves/'+this.id;
-        const returnValue = this.aService.callMethod(url, 'auth', '', this.activeModal);
+        const returnValue = this.aService.callMethod(url, 'auth', this.sendLeaverequest, this.activeModal);
         if (returnValue === "success") {
           this.currentStep$.next(nextStep);
           this.activeModal.close();
@@ -107,7 +107,7 @@ export class InapprovermodalComponent implements OnInit {
       this.checkNextStage = false;
       console.log(this.id)
       const url = '/assist-leave/rejectleaves/'+this.id;
-      const returnValue = this.aService.callMethod(url, 'rej', '', this.activeModal);
+      const returnValue = this.aService.callMethod(url, 'rej', this.sendLeaverequest, this.activeModal);
       if (returnValue === "success") {
         this.activeModal.close();
       }

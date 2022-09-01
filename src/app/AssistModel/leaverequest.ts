@@ -52,7 +52,7 @@ export class sendLeaverequest implements leaverequest {
     this.numberOfDays = d.numberOfDays;
     this.payPercentage = d.payPercentage;
     this.resourceId = d.resourceId;
-    this.approverId = d.approverId;
+    //this.approverId = d.approverId;
     this.contactAddress = d.contactAddress;
     this.contactPhone = d.contactPhone;
     this.ticketsPaid = d.ticketsPaid;

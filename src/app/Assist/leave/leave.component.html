@@ -50,14 +50,16 @@
             </ul>
           </span>
           </div>
-          <div class="d-flex align-items-center ms-1 ms-lg-3" >
+          <div class="d-flex align-items-center ms-1 ms-lg-3"
+               *ngIf="authRoles.includes('ADMIN')
+                    || authRoles.includes('LEAVE_ADMIN')
+                    || authRoles.includes('LEAVE_ADMIN')">
               <a
                 class="btn btn-sm btn-light-warning cursor-pointer"
                 data-bs-toggle="modal"
                 data-bs-target="#kt_modal_create_app"
                 id="kt_toolbar_primary_button"
-                (click)="openPendingAction()"
-              >
+                (click)="openPendingAction()">
                 Approve Action
               </a>
           </div>
