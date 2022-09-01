@@ -80,7 +80,7 @@ export class LeaveComponent implements OnInit,AfterViewInit {
   }
 
   public getLeave() {
-    const sb = this.aService.getMethod('assist-leave/getLeavesByResourceId/'+this.userModal, '',).subscribe((res) => {
+    const sb = this.aService.getMethod('assist-leave/getLeavesByResourceId/'+this.userModal.emailAddress, '',).subscribe((res) => {
       this.dataSource.data = res;
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
