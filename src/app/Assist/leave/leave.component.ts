@@ -2,7 +2,7 @@ import {AfterViewInit, Component, OnInit, Output, ViewChild} from '@angular/core
 import {MatTableDataSource} from "@angular/material/table";
 import {rolesrequest} from "../../AssistModel/rolesrequest";
 import {ModalDismissReasons, NgbModal, NgbModalOptions} from "@ng-bootstrap/ng-bootstrap";
-import {Subscription} from "rxjs";
+import {Subscription, take} from "rxjs";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort, Sort} from "@angular/material/sort";
 import {CustomColumn} from "../../AssistModel/CustomColumn";
@@ -48,12 +48,14 @@ export class LeaveComponent implements OnInit,AfterViewInit {
   searchFilter: any = {};
   columns: { columnDef: string; header: string; }[];
   closeResult: any ;
+  userModal: any;
 
   constructor(public authService: AuthService,public modalService: NgbModal,
               public notifyService: NotificationService,public aService: assistService,
               public commonService: commonService) {
     const auth = this.authService.getAuthFromLocalStorage();
     this.authRoles = auth?.roles;
+    const sub = this.authService.currentUser$.pipe(take(1)).subscribe(value => this.userModal = value);
   }
 
   ngOnInit(): void {
@@ -78,7 +80,7 @@ export class LeaveComponent implements OnInit,AfterViewInit {
   }
 
   public getLeave() {
-    const sb = this.aService.getMethod('assist-leave/leaves', '',).subscribe((res) => {
+    const sb = this.aService.getMethod('assist-leave/getLeavesByResourceId/'+this.userModal, '',).subscribe((res) => {
       this.dataSource.data = res;
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
