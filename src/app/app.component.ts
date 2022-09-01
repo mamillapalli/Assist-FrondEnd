@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {ChangeDetectionStrategy, Component, HostListener, OnInit} from '@angular/core';
 import { TranslationService } from './modules/i18n';
 // language list
 import { locale as enLang } from './modules/i18n/vocabs/en';
@@ -17,7 +17,7 @@ import { ThemeModeService } from './_metronic/partials/layout/theme-mode-switche
   styleUrls: ['./app.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit{
   constructor(
     private translationService: TranslationService,
     private modeService: ThemeModeService
@@ -31,9 +31,17 @@ export class AppComponent implements OnInit {
       deLang,
       frLang
     );
+    window.onbeforeunload = function() {
+      localStorage.clear();
+      return '';
+    };
   }
 
   ngOnInit() {
     this.modeService.init();
+  }
+  @HostListener("window:onbeforeunload",["$event"])
+  clearLocalStorage(event:any){
+    localStorage.clear();
   }
 }
