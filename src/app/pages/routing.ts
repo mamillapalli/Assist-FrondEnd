@@ -10,19 +10,6 @@ const Routing: Routes = [
       import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
   },
   {
-    path: 'roles', // <= Page URL
-    component: RolesComponent // <= Page component registration
-  },
-  {
-    path: 'resources', // <= Page URL
-    component: AddResourceComponent // <= Page component registration
-  },
-  {
-    path: 'leave', // <= Page URL
-    component: LeaveComponent // <= Page component registration
-  },
-
-  {
     path: 'builder',
     loadChildren: () =>
       import('./builder/builder.module').then((m) => m.BuilderModule),
@@ -55,6 +42,18 @@ const Routing: Routes = [
       import('../modules/apps/chat/chat.module').then((m) => m.ChatModule),
   },
   {
+    path: 'roles', // <= Page URL
+    component: RolesComponent // <= Page component registration
+  },
+  {
+    path: 'resources', // <= Page URL
+    component: AddResourceComponent // <= Page component registration
+  },
+  {
+    path: 'leave', // <= Page URL
+    component: LeaveComponent // <= Page component registration
+  },
+  {
     path: '',
     redirectTo: '/dashboard',
     pathMatch: 'full',
@@ -66,3 +65,4 @@ const Routing: Routes = [
 ];
 
 export { Routing };
+
