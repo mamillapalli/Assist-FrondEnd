@@ -29,7 +29,8 @@ export class UserInnerComponent implements OnInit, OnDestroy {
     this.setLanguage(this.translationService.getSelectedLanguage());
   }
 
-  logout() {console.log('logout')
+  logout() {
+    console.log('logout')
     this.auth.logout();
     this.router.navigate(['/'], {
       queryParams: {},
