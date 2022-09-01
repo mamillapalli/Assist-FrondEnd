@@ -55,6 +55,7 @@ export class LeaveComponent implements OnInit,AfterViewInit {
               public commonService: commonService) {
     const auth = this.authService.getAuthFromLocalStorage();
     this.authRoles = auth?.roles;
+    console.log(this.authRoles)
     const sub = this.authService.currentUser$.pipe(take(1)).subscribe(value => this.userModal = value);
   }
 
@@ -80,7 +81,7 @@ export class LeaveComponent implements OnInit,AfterViewInit {
   }
 
   public getLeave() {
-    const sb = this.aService.getMethod('assist-leave/getLeavesByResourceId/'+this.userModal.emailAddress, '',).subscribe((res) => {
+    const sb = this.aService.getMethod('assist-leave/leavesByResourceId/'+this.userModal.emailAddress, '',).subscribe((res) => {
       this.dataSource.data = res;
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
